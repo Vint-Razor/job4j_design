@@ -14,8 +14,8 @@ public class MatrixIt implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
-        for (int[] arr : data) {
-            for (Integer num : arr) {
+        for (int[] ints : data) {
+            for (Integer num : ints) {
                 if (num != null) {
                     return column < data.length;
                 }

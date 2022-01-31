@@ -2,6 +2,7 @@ package ru.job4j.collection;
 
 import ru.job4j.list.List;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class SimpleArrayList<T> implements List<T> {
@@ -16,7 +17,11 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public void add(T value) {
-
+        int capacity = container.length;
+        if (size == capacity) {
+            container = Arrays.copyOf(container, container.length * 2);
+        }
+        container[size++] = value;
     }
 
     @Override
@@ -31,12 +36,12 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        return null;
+        return container[index];
     }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override

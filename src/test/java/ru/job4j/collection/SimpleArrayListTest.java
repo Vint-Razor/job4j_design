@@ -8,11 +8,14 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.stream.IntStream;
 
+import org.junit.Assert;
+
 import static org.junit.Assert.*;
 
 public class SimpleArrayListTest {
 
     List<Integer> list;
+
     @Before
     public void initDate() {
         list = new SimpleArrayList<>(3);

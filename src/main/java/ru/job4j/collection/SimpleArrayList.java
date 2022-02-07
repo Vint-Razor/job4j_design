@@ -31,7 +31,11 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T remove(int index) {
-        return null;
+        T temp = container[index];
+        System.arraycopy(container, index + 1, container, index, size - index - 1);
+        size--;
+        container[size] = null;
+        return temp;
     }
 
     @Override

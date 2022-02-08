@@ -8,8 +8,6 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.stream.IntStream;
 
-import org.junit.Assert;
-
 import static org.junit.Assert.*;
 
 public class SimpleArrayListTest {
@@ -82,7 +80,7 @@ public class SimpleArrayListTest {
     @Test
     public void whenGetIteratorFromEmptyListThenHasNextReturnFalse() {
         list = new SimpleArrayList<>(5);
-        list.iterator().next();
+        assertFalse(list.iterator().hasNext());
     }
 
     @Test

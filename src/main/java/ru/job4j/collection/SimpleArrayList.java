@@ -27,7 +27,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     private void grow() {
         if (container.length != 0) {
-            container = Arrays.copyOf(container, container.length * 2);
+            container = Arrays.copyOf(container, container.length << 1);
         } else {
             container = (T[]) new Object[1];
         }
@@ -44,9 +44,9 @@ public class SimpleArrayList<T> implements List<T> {
     public T remove(int index) {
         T temp = get(index);
         System.arraycopy(container, index + 1, container, index, size - index - 1);
+        container[size - 1] = null;
         size--;
         modCount++;
-        container[size] = null;
         return temp;
     }
 

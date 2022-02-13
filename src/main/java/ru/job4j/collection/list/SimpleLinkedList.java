@@ -1,5 +1,6 @@
 package ru.job4j.collection.list;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -40,14 +41,23 @@ public class SimpleLinkedList<E> implements List<E> {
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
+            Node<E> node = first;
+            final int concurModCount = modCount;
             @Override
             public boolean hasNext() {
-                return false;
+                node = node.next;
+                return node != null;
             }
 
             @Override
             public E next() {
-                return null;
+                if (concurModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+                if (!hasNext()) {
+                    throw new IndexOutOfBoundsException();
+                }
+                return node.data;
             }
         };
     }

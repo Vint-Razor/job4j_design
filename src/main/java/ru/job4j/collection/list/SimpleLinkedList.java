@@ -38,14 +38,26 @@ public class SimpleLinkedList<E> implements List<E> {
         return rsl.data;
     }
 
+    private static class Node<E> {
+        private E data;
+        private Node<E> next;
+        private Node<E> prev;
+
+        public Node(Node<E> prev, E data, Node<E> next) {
+            this.data = data;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
+
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
             Node<E> node = first;
+            Node<E> oldNode;
             final int concurModCount = modCount;
             @Override
             public boolean hasNext() {
-                node = node.next;
                 return node != null;
             }
 
@@ -57,21 +69,11 @@ public class SimpleLinkedList<E> implements List<E> {
                 if (!hasNext()) {
                     throw new IndexOutOfBoundsException();
                 }
-                return node.data;
+                oldNode = node;
+                node = node.next;
+                return oldNode.data;
             }
         };
-    }
-
-    private static class Node<E> {
-        private E data;
-        private Node<E> next;
-        private Node<E> prev;
-
-        public Node(Node<E> prev, E data, Node<E> next) {
-            this.data = data;
-            this.next = next;
-            this.prev = prev;
-        }
     }
 }
 

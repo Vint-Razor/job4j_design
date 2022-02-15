@@ -20,7 +20,6 @@ public class SimpleStackTest {
         stack.push(1);
         stack.pop();
         stack.push(2);
-        stack.pop();
         assertThat(stack.pop(), is(2));
     }
 

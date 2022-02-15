@@ -57,6 +57,9 @@ public class SimpleLinkedList<E> implements List<E> {
             final int concurModCount = modCount;
             @Override
             public boolean hasNext() {
+                if (concurModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
                 return node != null;
             }
 
@@ -64,9 +67,6 @@ public class SimpleLinkedList<E> implements List<E> {
             public E next() {
                 if (!hasNext()) {
                     throw new IndexOutOfBoundsException();
-                }
-                if (concurModCount != modCount) {
-                    throw new ConcurrentModificationException();
                 }
                 E value = node.data;
                 node = node.next;

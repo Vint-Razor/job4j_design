@@ -54,7 +54,6 @@ public class SimpleQueueTest {
     }
 
     @Test
-
     public void when3Push3Poll() {
         SimpleQueue<Integer> queue = new SimpleQueue<>();
         queue.push(1);

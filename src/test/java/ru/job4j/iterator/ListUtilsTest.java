@@ -31,15 +31,31 @@ public class ListUtilsTest {
         assertThat(input, is(Arrays.asList(0, 1, 2, 3)));
     }
 
-    @Test
-    public void removeIf() {
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void whenAddAfterWithInvalidIndex() {
+        List<String> input = new ArrayList<>(Arrays.asList("One", "Two"));
+        ListUtils.addAfter(input, 2, "Three");
     }
 
     @Test
-    public void replaceIf() {
+    public void whenRemoveIf() {
+        List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 2));
+        ListUtils.removeIf(list, integer -> integer == 2);
+        assertThat(list, is(Arrays.asList(1, 3, 4)));
+    }
+
+    @Test
+    public void whenReplaceIf() {
+        List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 22, 2));
+        ListUtils.replaceIf(list, i -> i == 2, 3);
+        assertThat(list, is(Arrays.asList(1, 3, 3, 4, 22, 3)));
     }
 
     @Test
     public void removeAll() {
+        List<Integer> input = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
+        List<Integer> filter = new ArrayList<>(Arrays.asList(1, 4, 6));
+        ListUtils.removeAll(input, filter);
+        assertThat(input, is(Arrays.asList(2, 3, 5)));
     }
 }

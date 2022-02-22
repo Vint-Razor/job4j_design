@@ -6,7 +6,13 @@ public class Main {
     public static void main(String[] args) {
         String str = "hello world";
         System.out.println(str);
-        System.out.println(binary(123));
+        int num = 123456789;
+        System.out.println(binary(num));
+        System.out.println(binary(123456789 >>> 16));
+        num = num ^ (num >>> 16);
+        System.out.println(binary(num));
+        System.out.println(binary(1 & 15));
+        System.out.println(binary(17 & 15));
     }
 
     public static void hashPrint(String str, Scanner scanner) {

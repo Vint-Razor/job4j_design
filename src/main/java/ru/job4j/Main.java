@@ -4,15 +4,26 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String str = "hello world";
+        String str = "begin...";
         System.out.println(str);
-        int num = 123456789;
-        System.out.println(binary(num));
-        System.out.println(binary(123456789 >>> 16));
-        num = num ^ (num >>> 16);
-        System.out.println(binary(num));
-        System.out.println(binary(1 & 15));
-        System.out.println(binary(17 & 15));
+        String[] arrStr = new String[10];
+        String one = "one";
+        String two = "two";
+        String three = "three";
+        addHash(arrStr, one);
+        addHash(arrStr, two);
+        addHash(arrStr, three);
+        addHash(arrStr, "four");
+        addHash(arrStr, "five");
+        addHash(arrStr, "six");
+        for (String el : arrStr) {
+            System.out.println(el);
+        }
+
+        System.out.println("hesh \"one\" " + binary(one.hashCode()));
+        System.out.println("&\n" + "arr length " + binary(arrStr.length));
+        System.out.println("index      " + binary(one.hashCode() & arrStr.length));
+
     }
 
     public static void hashPrint(String str, Scanner scanner) {
@@ -29,5 +40,21 @@ public class Main {
             num /= 2;
         }
         return sb.reverse().toString();
+    }
+
+    public static <T> void addHash(T[] arr, T value) {
+        int lastNull = arr.length - 1;
+        int i = (arr.length - 1) & value.hashCode();
+        T p = arr[i];
+        if (p == null) {
+            arr[i] = value;
+        } else {
+            for (int j = lastNull; j >= 0; j--) {
+                if (arr[j] == null) {
+                    arr[j] = value;
+                    break;
+                }
+            }
+        }
     }
 }

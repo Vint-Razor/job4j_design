@@ -19,6 +19,11 @@ public class User {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(name, children, birthday);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -27,6 +32,7 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return children == user.children && Objects.equals(name, user.name) && Objects.equals(birthday, user.birthday);
+        return children == user.children && Objects.equals(name, user.name)
+                && Objects.equals(birthday, user.birthday);
     }
 }

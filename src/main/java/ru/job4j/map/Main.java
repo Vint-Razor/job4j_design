@@ -14,6 +14,7 @@ public class Main {
         Map<User, Object> map = new HashMap<>();
         map.put(one, new Object());
         map.put(two, new Object());
-        System.out.println(map);
+        map.entrySet().stream()
+                .forEach(System.out::println);
     }
 }

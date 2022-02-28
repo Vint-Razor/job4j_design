@@ -90,7 +90,8 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     private void expand() {
         MapEntry<K, V>[] oldTab = Arrays.copyOf(table, capacity);
-        table = new MapEntry[capacity * 2];
+        capacity *= 2;
+        table = new MapEntry[capacity];
         count = 0;
         for (MapEntry<K, V> el : oldTab) {
             if (el != null) {

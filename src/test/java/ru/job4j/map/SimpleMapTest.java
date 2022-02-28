@@ -137,6 +137,8 @@ public class SimpleMapTest {
         map.put(6, 12);
         map.put(7, 33);
         map.put(8, 55);
+        map.put(9, 55);
+        map.put(10, 55);
         assertThat(map.get(5), is(11));
     }
 }

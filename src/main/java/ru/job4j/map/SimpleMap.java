@@ -32,14 +32,14 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public V get(K key) {
         int i = indexFor(hash(key.hashCode()));
-        return table[i] != null && key == table[i].key ? table[i].value : null;
+        return table[i] != null && key.equals(table[i].key) ? table[i].value : null;
     }
 
     @Override
     public boolean remove(K key) {
         int i = indexFor(hash(key.hashCode()));
         boolean rsl = false;
-        if (table[i] != null && table[i].key == key) {
+        if (table[i] != null && key.equals(table[i].key)) {
             table[i] = null;
             modCount++;
             count--;
@@ -51,7 +51,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public Iterator<K> iterator() {
         int concurrentCount = modCount;
-        return new Iterator<K>() {
+        return new Iterator<>() {
             int index = 0;
 
             @Override
@@ -59,15 +59,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (concurrentCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                boolean rsl = false;
-                while (count != 0 && index < table.length) {
-                    if (table[index] != null) {
-                        rsl = true;
-                        break;
-                    }
+                while (count != 0 && index < table.length && table[index] == null) {
                     index++;
                 }
-                return rsl;
+                return index < table.length && table[index] != null;
             }
 
             @Override

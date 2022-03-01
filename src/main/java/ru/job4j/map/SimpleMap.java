@@ -59,7 +59,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (concurrentCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                while (count != 0 && index < table.length && table[index] == null) {
+                while (index < table.length && table[index] == null) {
                     index++;
                 }
                 return index < table.length && table[index] != null;

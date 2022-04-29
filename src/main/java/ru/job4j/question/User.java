@@ -1,7 +1,5 @@
 package ru.job4j.question;
 
-import java.util.Objects;
-
 public class User {
     private int id;
     private String name;
@@ -36,11 +34,11 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return id == user.id && Objects.equals(name, user.name);
+        return id == user.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Integer.hashCode(id);
     }
 }

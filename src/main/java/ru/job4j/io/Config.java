@@ -3,9 +3,11 @@ package ru.job4j.io;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 public class Config {
     private final String path;
@@ -16,11 +18,25 @@ public class Config {
     }
 
     public void load() {
-
+        try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
+            read.lines()
+                    .filter(str -> !str.contains("#") && !str.isBlank())
+                    .map(str -> str.split("="))
+                    .forEach(arr -> {
+                        if (arr.length < 2 || arr[0].isBlank() || arr[1].isBlank()) {
+                            throw new IllegalArgumentException();
+                        }
+                        values.put(arr[0], Arrays.stream(arr)
+                                .skip(1)
+                                .collect(Collectors.joining("=")));
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String value(String key) {
-        throw new UnsupportedOperationException("Don`t impl this method yet!");
+        return values.get(key);
     }
 
     @Override

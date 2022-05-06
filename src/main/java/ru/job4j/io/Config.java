@@ -20,8 +20,8 @@ public class Config {
     public void load() {
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             read.lines()
-                    .filter(str -> !str.contains("#") && !str.isBlank())
                     .map(str -> str.split("="))
+                    .filter(arr -> arr[0].indexOf('#') != 0)
                     .forEach(arr -> {
                         if (arr.length < 2 || arr[0].isBlank() || arr[1].isBlank()) {
                             throw new IllegalArgumentException();

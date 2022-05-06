@@ -20,15 +20,13 @@ public class Config {
     public void load() {
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             read.lines()
-                    .map(str -> str.split("="))
-                    .filter(arr -> arr[0].indexOf('#') != 0)
+                    .map(str -> str.split("=", 2))
+                    .filter(arr -> !arr[0].isEmpty() && arr[0].indexOf('#') != 0)
                     .forEach(arr -> {
                         if (arr.length < 2 || arr[0].isBlank() || arr[1].isBlank()) {
                             throw new IllegalArgumentException();
                         }
-                        values.put(arr[0], Arrays.stream(arr)
-                                .skip(1)
-                                .collect(Collectors.joining("=")));
+                        values.put(arr[0], arr[1]);
                     });
         } catch (IOException e) {
             e.printStackTrace();

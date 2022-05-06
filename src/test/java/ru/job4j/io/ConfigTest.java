@@ -33,12 +33,12 @@ public class ConfigTest {
         assertThat(config.value("name"), is("Petr Arsentev"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void whenMissingKey() {
-        String path = "./data/missing_key.properties";
+    @Test
+    public void whenEmptyString() {
+        String path = "./data/empty_string.properties";
         Config config = new Config(path);
         config.load();
-        config.value("name");
+        assertThat(config.value("name"), is("Petr"));
     }
 
     @Test(expected = IllegalArgumentException.class)

@@ -3,11 +3,9 @@ package ru.job4j.io;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
-import java.util.stream.Collectors;
 
 public class Config {
     private final String path;
@@ -21,9 +19,10 @@ public class Config {
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             read.lines()
                     .map(str -> str.split("=", 2))
-                    .filter(arr -> !arr[0].isEmpty() && arr[0].indexOf('#') != 0)
+                    .filter(arr -> !(arr.length == 1 && arr[0].isEmpty())
+                            && arr[0].indexOf('#') != 0)
                     .forEach(arr -> {
-                        if (arr.length < 2 || arr[0].isBlank() || arr[1].isBlank()) {
+                        if (arr.length == 1 || arr[0].isBlank() || arr[1].isBlank()) {
                             throw new IllegalArgumentException();
                         }
                         values.put(arr[0], arr[1]);

@@ -42,6 +42,14 @@ public class ConfigTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void whenMissingKey() {
+        String path = "./data/missing_key.properties";
+        Config config = new Config(path);
+        config.load();
+        config.value("name");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void whenEmptyKey() {
         String path = "./data/empty_key.properties";
         Config config = new Config(path);

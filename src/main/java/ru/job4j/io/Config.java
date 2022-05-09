@@ -22,13 +22,19 @@ public class Config {
                     .filter(arr -> !(arr.length == 1 && arr[0].isEmpty())
                             && arr[0].indexOf('#') != 0)
                     .forEach(arr -> {
-                        if (arr.length == 1 || arr[0].isBlank() || arr[1].isBlank()) {
-                            throw new IllegalArgumentException();
-                        }
+                        validator(arr);
                         values.put(arr[0], arr[1]);
                     });
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void validator(String[] arr) {
+        if (arr.length == 1 || arr[0].isBlank() || arr[1].isBlank()) {
+            throw new IllegalArgumentException(
+                    "Отсутствует ключ, значение или разделитель \"=\"."
+            );
         }
     }
 

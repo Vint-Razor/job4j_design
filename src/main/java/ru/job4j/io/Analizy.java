@@ -16,6 +16,7 @@ public class Analizy {
                     error = true;
                 } else if (error && Integer.parseInt(arr[0]) < 400) {
                     sb.append(arr[1]);
+                    sb.append(";");
                     error = false;
                     out.println(sb);
                     sb.setLength(0);

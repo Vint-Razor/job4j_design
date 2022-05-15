@@ -10,22 +10,22 @@ import java.util.*;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
 
-    private Map<FileProperty, Path> map = new HashMap<>();
-    private Set<Path> paths = new HashSet<>();
+    private Map<FileProperty, List<Path>> map = new HashMap<>();
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        FileProperty fileProperty =
-                new FileProperty(Files.size(file), file.getFileName().toString());
+        FileProperty fileProperty = new FileProperty(Files.size(file), file.getFileName().toString());
+        List<Path> paths = new LinkedList<>();
         if (map.containsKey(fileProperty)) {
-            paths.add(map.get(fileProperty));
+            map.get(fileProperty).add(file);
+        } else {
             paths.add(file);
+            map.put(fileProperty, paths);
         }
-        map.put(fileProperty, file);
         return super.visitFile(file, attrs);
     }
 
-    public Set<Path> getPaths() {
-        return paths;
+    public Map<FileProperty, List<Path>> getMap() {
+        return map;
     }
 }

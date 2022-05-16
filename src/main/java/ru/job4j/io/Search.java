@@ -22,9 +22,12 @@ public class Search {
     }
 
     private static void validator(String[] args) {
-        if (args.length < 2) {
+        if (args.length != 2) {
             throw new IllegalArgumentException(
                     "Root folder or file extension is null. Usage java -jar search.jar ROOT_FOLDER FILE_EXTENSION");
+        }
+        if (!args[1].startsWith(".")) {
+            throw new IllegalArgumentException("The file extension must start with \".\"");
         }
         Path start = Paths.get(args[0]);
         if (!start.toFile().exists()) {

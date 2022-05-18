@@ -14,29 +14,27 @@ public class ArgsName {
     }
 
     private void parse(String[] args) {
-        validator(args);
-    }
-
-    private void validator(String[] args) {
-        if (args.length == 0) {
-            throw new IllegalArgumentException("At least one argument is needed");
-        }
         for (String str : args) {
             if (!str.startsWith("-")) {
                 throw new IllegalArgumentException("arguments must start with \"-\"");
             }
             String[] strings = str.substring(1)
                     .split("=", 2);
-            if (strings.length != 2 || strings[0].isBlank() || strings[1].isBlank()) {
-                throw new IllegalArgumentException("There is no key, value or separator \"=\" in the argument");
-            }
-            if (values.putIfAbsent(strings[0], strings[1]) != null) {
-                throw new IllegalArgumentException("Don't use duplicate keys");
-            }
+            validator(strings);
+            values.put(strings[0], strings[1]);
+        }
+    }
+
+    private void validator(String[] strings) {
+        if (strings.length != 2 || strings[0].isBlank() || strings[1].isBlank()) {
+            throw new IllegalArgumentException("There is no key, value or separator \"=\" in the argument");
         }
     }
 
     public static ArgsName of(String[] args) {
+        if (args.length == 0) {
+            throw new IllegalArgumentException("At least one argument is needed");
+        }
         ArgsName names = new ArgsName();
         names.parse(args);
         return names;

@@ -12,7 +12,10 @@ public class Search {
         validator(args);
         Path start = Paths.get(args[0]);
         String find = args[1];
-        search(start, p -> p.toFile().getName().endsWith(find)).forEach(System.out::println);
+        search(start, p -> p.toFile()
+                .getName()
+                .endsWith(find))
+                .forEach(System.out::println);
     }
 
     public static List<Path> search(Path root, Predicate<Path> condition) throws IOException {

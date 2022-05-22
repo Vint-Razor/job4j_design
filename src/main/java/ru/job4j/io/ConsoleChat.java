@@ -22,7 +22,7 @@ public class ConsoleChat {
         Random rnd = new Random();
         Scanner scanner = new Scanner(System.in);
         List<String> phrases = readPhrases();
-        System.out.println("введите строку");
+        System.out.println("введите строки");
         String str = scanner.nextLine();
         while (!OUT.equals(str)) {
             if (STOP.equals(str)) {

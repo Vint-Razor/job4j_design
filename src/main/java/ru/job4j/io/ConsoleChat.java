@@ -24,9 +24,9 @@ public class ConsoleChat {
         List<String> phrases = readPhrases();
         System.out.println("введите строку");
         String str = scanner.nextLine();
-        while (!str.equals(OUT)) {
-            if (str.equals(STOP)) {
-                while (!str.equals(CONTINUE)) {
+        while (!OUT.equals(str)) {
+            if (STOP.equals(str)) {
+                while (!CONTINUE.equals(str)) {
                     str = logScanUser(str, scanner);
                 }
             }

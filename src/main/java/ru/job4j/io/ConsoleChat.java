@@ -27,23 +27,19 @@ public class ConsoleChat {
         while (!OUT.equals(str)) {
             if (STOP.equals(str)) {
                 while (!CONTINUE.equals(str)) {
-                    str = logScanUser(str, scanner);
+                    log.add("User: " + str);
+                    str = scanner.nextLine();
                 }
             }
+            log.add("User: " + str);
             String strBot = phrases.get(rnd.nextInt(phrases.size()));
             log.add("Bot: " + strBot);
             System.out.println(strBot);
-            str = logScanUser(str, scanner);
+            str = scanner.nextLine();
         }
         log.add(str);
         saveLog(log);
         System.exit(0);
-    }
-
-    private String logScanUser(String str, Scanner scanner) {
-        log.add("User: " + str);
-        str = scanner.nextLine();
-        return str;
     }
 
     private static void validator(String botAnswer) {

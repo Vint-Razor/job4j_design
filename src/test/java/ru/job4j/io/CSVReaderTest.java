@@ -22,10 +22,10 @@ public class CSVReaderTest {
                 "name;age;last_name;education",
                 "Tom;20;Smith;Bachelor",
                 "Jack;25;Johnson;Undergraduate",
-                "Wiliam;30;Brown;Secondary special"
+                "William;30;Brown;Secondary special"
         );
-        File file = temporaryFolder.newFile("source.scv");
-        File target = temporaryFolder.newFile("target.scv");
+        File file = temporaryFolder.newFile("source.csv");
+        File target = temporaryFolder.newFile("target.csv");
         ArgsName argsName = ArgsName.of(new String[] {
                 "-path=" + file.getAbsoluteFile(), "-delimiter=;", "-out=" + target.getAbsoluteFile(),
                 "-filter=name,age"

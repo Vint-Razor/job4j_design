@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 
 public class EchoServer {
     public static void main(String[] args) throws IOException {
@@ -20,7 +19,10 @@ public class EchoServer {
                     String str = in.readLine();
                     if (str.contains("?msg=Bye")) {
                         server.close();
-                        System.exit(0);
+                    } else if (str.contains("?msg=Hello")) {
+                        out.write("Hello".getBytes());
+                    } else {
+                        out.write("What?".getBytes());
                     }
                     out.flush();
                 }

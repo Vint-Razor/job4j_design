@@ -2,7 +2,7 @@
 <warrior name=" Bob" health="12" enemy="true">
     <weapon name="bow" damage="1"/>
     <features>
-        <featur>archer</featur>
-        <featur>loser</featur>
+        <feature>archer</feature>
+        <feature>loser</feature>
     </features>
 </warrior>

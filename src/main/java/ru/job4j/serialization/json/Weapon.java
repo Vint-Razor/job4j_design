@@ -1,8 +1,18 @@
 package ru.job4j.serialization.json;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "weapon")
 public class Weapon {
-    private final String name;
-    private final int damage;
+
+    @XmlAttribute
+    private String name;
+    @XmlAttribute
+    private int damage;
+
+    public Weapon() {
+    }
 
     public Weapon(String name, int damage) {
         this.name = name;

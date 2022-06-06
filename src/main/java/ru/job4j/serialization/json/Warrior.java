@@ -1,13 +1,25 @@
 package ru.job4j.serialization.json;
 
+import javax.xml.bind.annotation.*;
 import java.util.Arrays;
 
+@XmlRootElement(name = "warrior")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Warrior {
-    private final String name;
-    private final int health;
-    private final boolean enemy;
-    private final Weapon weapon;
-    private final String[] features;
+
+    @XmlAttribute
+    private String name;
+    @XmlAttribute
+    private int health;
+    @XmlAttribute
+    private boolean enemy;
+    private Weapon weapon;
+    @XmlElementWrapper(name = "features")
+    @XmlElement(name = "feature")
+    private String[] features;
+
+    public Warrior() {
+    }
 
     public Warrior(String name, int health, boolean enemy, Weapon weapon, String[] features) {
         this.name = name;

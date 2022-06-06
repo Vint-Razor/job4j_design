@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<warrior name=" Bob" health="12" enemy="true">
+    <weapon name="bow" damage="1"/>
+    <features>
+        <featur>archer</featur>
+        <featur>loser</featur>
+    </features>
+</warrior>

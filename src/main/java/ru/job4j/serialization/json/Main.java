@@ -22,11 +22,10 @@ public class Main {
             warrior = (Warrior) unmarshaller.unmarshal(reader);
             System.out.println(warrior);
         }
-        System.out.format("сереализация из обекта %s%n", warrior.getClass());
+        System.out.format("%nсереализация из обекта класса %s%n", warrior.getClass().getSimpleName());
         try (StringWriter writer = new StringWriter()) {
             marshaller.marshal(warrior, writer);
-            String xml = writer.getBuffer().toString();
-            System.out.println(xml);
+            System.out.println(writer.getBuffer().toString());
         }
     }
 }

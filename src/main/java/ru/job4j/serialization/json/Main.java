@@ -5,22 +5,24 @@ import com.google.gson.GsonBuilder;
 
 public class Main {
     public static void main(String[] args) {
-        Person person = new Person(false, 30, new Contact("11-111"),
-                new String[]{"Worker", "Married"});
+        final Warrior warrior = new Warrior("Jack", 20, false,
+                new Weapon("Sword", 3), new String[]{"berserk", "slow"});
         final Gson gson = new GsonBuilder().create();
-        System.out.println(gson.toJson(person));
-        final String personJson =
+        System.out.println(gson.toJson(warrior));
+        final String warriorJson =
                 "{"
-                        + "\"sex\":false,"
-                        + "\"age\":35,"
-                + "\"contact\":"
-                + "{"
-                + "\"phone\":\"+7(924)111-111-11-11\""
-                + "},"
-                + "\"statuses\":"
-                + "[\"Student\",\"Free\"]"
-                + "}";
-        final Person personMode = gson.fromJson(personJson, Person.class);
-        System.out.println(personMode);
+                        + "\"health\":15,"
+                        + "\"name\":\"Bob\","
+                        + "\"enemy\":true,"
+                        + "\"weapon\":"
+                        + "{"
+                        + "\"name\":\"bow\","
+                        + "\"damage\":2"
+                        + "},"
+                        + "\"features\":"
+                        + "[\"archer\", \"loser\"]"
+                        + "}";
+        final Warrior warriorMod = gson.fromJson(warriorJson, Warrior.class);
+        System.out.println(warriorMod);
     }
 }

@@ -29,6 +29,26 @@ public class Warrior {
         this.features = features;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public boolean isEnemy() {
+        return enemy;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public String[] getFeatures() {
+        return features;
+    }
+
     @Override
     public String toString() {
         return "Warrior{"

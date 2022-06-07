@@ -19,6 +19,14 @@ public class Weapon {
         this.damage = damage;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
     @Override
     public String toString() {
         return "Weapon{"

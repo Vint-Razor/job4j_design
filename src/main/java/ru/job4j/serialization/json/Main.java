@@ -1,31 +1,26 @@
 package ru.job4j.serialization.json;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.nio.file.Path;
+import org.json.JSONObject;
 
 public class Main {
-    public static void main(String[] args) throws JAXBException, IOException {
-        Path path = Path.of("./data/serialization/warrior.xml");
-        Warrior warrior;
-        JAXBContext context = JAXBContext.newInstance(Warrior.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        System.out.format("десериализация из файла %s%n", path.toAbsolutePath());
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        try (FileReader reader = new FileReader(path.toFile())) {
-            warrior = (Warrior) unmarshaller.unmarshal(reader);
-            System.out.println(warrior);
-        }
-        System.out.format("%nсереализация из обекта класса %s%n", warrior.getClass().getSimpleName());
-        try (StringWriter writer = new StringWriter()) {
-            marshaller.marshal(warrior, writer);
-            System.out.println(writer.getBuffer().toString());
-        }
+    public static void main(String[] args) {
+        JSONObject jsonObject = new JSONObject(
+                "{"
+                        + "\"name\":\"Jack\","
+                        + "\"health\":20,"
+                        + "\"enemy\":false,"
+                        + "\"weapon\":"
+                         + "{"
+                            + "\"name\":\"sword\","
+                            + "\"damage\":3"
+                         + "},"
+                        + "\"features\":[\"berserk\",\"slow\"]"
+                        + "}"
+        );
+        System.out.println(jsonObject);
+        Warrior warrior = new Warrior("Jack", 20, false, new Weapon("sword", 3),
+                new String[] {"berserk", "slow"});
+        String json = new JSONObject(warrior).toString();
+        System.out.println(json);
     }
 }

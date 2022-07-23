@@ -2,7 +2,8 @@ package ru.job4j;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.*;
 
 public class CalculatorTest {
 
@@ -13,5 +14,12 @@ public class CalculatorTest {
         int actual = 7;
         int rsl = Calculator.sum(a, b);
         assertEquals(actual, rsl);
+    }
+
+    @Test
+    public void when2plus3then5() {
+        int result = 2 + 3;
+        int expected = 5;
+        assertThat(result).isEqualTo(expected);
     }
 }

@@ -6,6 +6,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Predicate;
+/**
+ * Класс поиска файлов в файловой системе по придекату
+ * */
 
 public class Search {
     public static void main(String[] args) throws IOException {
@@ -17,10 +20,20 @@ public class Search {
                 .endsWith(find))
                 .forEach(System.out::println);
     }
+    /**
+     * Метод ищет файлы начиная с определенной директории по предикату
+     * @param root стартовая директория
+     * @param condition условия сравнения файлов
+     * @return список путей фалов
+     * */
 
-    public static List<Path> search(Path root, Predicate<Path> condition) throws IOException {
+    public static List<Path> search(Path root, Predicate<Path> condition) {
         SearchFiles searcher = new SearchFiles(condition);
-        Files.walkFileTree(root, searcher);
+        try {
+            Files.walkFileTree(root, searcher);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return searcher.getPath();
     }
 

@@ -11,7 +11,7 @@ public class ResultFile {
                         new FileOutputStream("result.txt")
                 ))) {
             out.println("New Hello World!");
-            out.println("Hello");
+            out.println("Hello, world");
             out.println("World!");
         } catch (Exception e) {
             e.printStackTrace();

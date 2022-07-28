@@ -1,5 +1,5 @@
 create table body(
 id serial primary key,
-names varchar(255)
+"name" varchar(255)
 );
 

@@ -6,12 +6,12 @@ insert into rules ("name") values ('viewing_product');
 insert into roles ("name") values ('user');
 insert into roles ("name") values ('admin');
 
-insert into rules_role (rules_id, roles_id) values (1, 1);
-insert into rules_role (rules_id, roles_id) values (1, 2);
-insert into rules_role (rules_id, roles_id) values (2, 1);
-insert into rules_role (rules_id, roles_id) values (2, 2);
-insert into rules_role (rules_id, roles_id) values (2, 3);
-insert into rules_role (rules_id, roles_id) values (2, 4);
+insert into rules_role (roles_id, rules_id) values (1, 1);
+insert into rules_role (roles_id, rules_id) values (1, 3);
+insert into rules_role (roles_id, rules_id) values (2, 1);
+insert into rules_role (roles_id, rules_id) values (2, 2);
+insert into rules_role (roles_id, rules_id) values (2, 3);
+insert into rules_role (roles_id, rules_id) values (2, 4);
 
 insert into states ("name") values ('in_procesing');
 insert into states ("name") values ('redy_to_ship');

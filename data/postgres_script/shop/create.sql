@@ -1,13 +1,12 @@
+
+create table roles(
+	id serial primary key,
+	"name" varchar(255)
+);
 create table users(
 	id serial primary key,
 	"name" varchar(255),
 	role_id int references roles
-);
-create table item(
-	id serial primary key,
-	category_id int references category,
-	state_id int references states,
-	user_id int references users
 );
 create table category(
 	id serial primary key,
@@ -17,9 +16,11 @@ create table states(
 	id serial primary key,
 	"name" varchar(255)
 );
-create table roles(
+create table item(
 	id serial primary key,
-	"name" varchar(255)
+	category_id int references category,
+	state_id int references states,
+	user_id int references users
 );
 create table "comments"(
 	id serial primary key,
@@ -36,7 +37,7 @@ create table rules(
 	"name" varchar(255)
 );
 create table rules_role(
-	rules_id int references rules no delete restrict,
-	roles_id int references roles no delete cascade,
-	primary key (rules_id, roles_id)
+	id serial primary key,
+	rules_id int references rules,
+	roles_id int references roles
 );

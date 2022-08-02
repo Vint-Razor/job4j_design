@@ -37,6 +37,6 @@ create table rules(
 );
 create table rules_role(
 	id serial primary key,
-	rules_id int,
-	roles_id int
+	rules_id int references rules(id),
+	roles_id int references roles(id)
 );

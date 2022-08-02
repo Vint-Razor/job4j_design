@@ -1,3 +1,4 @@
+
 insert into rules ("name") values ('create_accaunt');
 insert into rules ("name") values ('create_order');
 insert into rules ("name") values ('personal_accaunt');
@@ -22,3 +23,14 @@ insert into category ("name") values ('sport');
 insert into category ("name") values ('electronics');
 insert into category ("name") values ('children_prod');
 insert into category ("name") values ('garden');
+
+insert into users ("name", role_id) values ('Ivan', 1);
+
+insert into item (category_id, state_id, user_id) values (1, 1, 1);
+
+insert into "comments" (item_id, "comment") values (1, 'hello where is my order?');
+
+insert into attachs (item_id, "file") 
+values (1, pg_read_file('C:\projects\job4j_design\404.txt')::bytea);
+
+select * from item;

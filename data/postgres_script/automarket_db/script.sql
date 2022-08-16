@@ -59,7 +59,7 @@ WHERE car.body_id is null;
 --Вывести двигатели, которые не используются НИ в одной машине
 SELECT eng.name AS "двигатель недоступен" 
 FROM car_engines AS eng
-LEFT join car ON car.engine_id = eng.id;
+LEFT join car ON car.engine_id = eng.id
 WHERE car.engine_id is null;
 
 --Вывести коробки передач, которые не используются НИ в одной машине

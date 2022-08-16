@@ -48,7 +48,7 @@ SELECT	car.name as name,
 FROM car 
 LEFT JOIN car_bodies 		as bod 	ON car.body_id = bod.id
 LEFT JOIN car_engines 		as eng	ON car.engine_id = eng.id
-LEFT JOIN car_transmissions	as trs	ON car.transmission_id = trs.id
+LEFT JOIN car_transmissions	as trs	ON car.transmission_id = trs.id;
 
 --Вывести кузовы, которые не используются НИ в одной машине.
 SELECT bod."name" AS "кузов отсутствует"

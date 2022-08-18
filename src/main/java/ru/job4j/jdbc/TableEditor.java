@@ -2,7 +2,10 @@ package ru.job4j.jdbc;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 import java.util.StringJoiner;
 
@@ -34,34 +37,30 @@ public class TableEditor implements AutoCloseable {
     }
 
     public void createTable(String tableName) {
-        try (Statement statement = connection.createStatement()) {
-            var sql = String.format("create table if not exists %s();", tableName);
-            statement.execute(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        var sql = String.format("CREATE TABLE IF NOT EXISTS %s();", tableName);
+        edit(sql);
     }
 
     public void dropTable(String tableName) {
-
+        var sql = String.format("DROP TABLE %s", tableName);
+        edit(sql);
     }
 
     public void addColumn(String tableName, String columnName, String type) {
-        try (Statement statement = connection.createStatement()) {
-            var sql = String.format("ALTER TABLE %s ADD COLUMN %s %s;",
-                    tableName, columnName, type);
-            statement.execute(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        var sql = String.format("ALTER TABLE %s ADD COLUMN %s %s;",
+                tableName, columnName, type);
+        edit(sql);
     }
 
     public void dropColumn(String tableName, String columnName) {
-
+        var sql = String.format("ALTER TABLE %s DROP COLUMN %s", tableName, columnName);
+        edit(sql);
     }
 
     public void renameColumn(String tableName, String columnName, String newColumnName) {
-
+        var sql = String.format("ALTER TABLE %s RENAME COLUMN %s TO %s",
+                tableName, columnName, newColumnName);
+        edit(sql);
     }
 
     public static String getTableScheme(Connection connection, String tableName) {
@@ -92,17 +91,37 @@ public class TableEditor implements AutoCloseable {
         }
     }
 
-    public static void main(String[] args) {
+    private void edit(String sql) {
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Properties getProperties(String nameFile) {
         Properties properties = new Properties();
         ClassLoader loader = TableEditor.class.getClassLoader();
-        try (InputStream in = loader.getResourceAsStream("postgres.properties")) {
+        try (InputStream in = loader.getResourceAsStream(nameFile)) {
             properties.load(in);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        TableEditor tableEditor = new TableEditor(properties);
+        return properties;
+    }
+
+    public static void main(String[] args) {
+        TableEditor tableEditor = new TableEditor(getProperties("postgres.properties"));
         tableEditor.createTable("create_test");
-        tableEditor.addColumn("create_test", "name", "varchar(255)");
         System.out.println(getTableScheme(tableEditor.connection, "create_test"));
+        tableEditor.addColumn("create_test", "id", "serial PRIMARY KEY");
+        tableEditor.addColumn("create_test", "name", "varchar(255)");
+        tableEditor.addColumn("create_test", "age", "int");
+        System.out.println(getTableScheme(tableEditor.connection, "create_test"));
+        tableEditor.renameColumn("create_test", "name", "surname");
+        System.out.println(getTableScheme(tableEditor.connection, "create_test"));
+        tableEditor.dropColumn("create_test", "age");
+        System.out.println(getTableScheme(tableEditor.connection, "create_test"));
+        tableEditor.dropTable("create_test");
     }
 }

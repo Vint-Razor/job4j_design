@@ -20,18 +20,14 @@ public class TableEditor implements AutoCloseable {
     }
 
     private void initConnection() {
-        String hc = "hibernate.connection.";
         try {
-            Class.forName(properties.getProperty(hc + "driver_class"));
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        String url = properties.getProperty(hc + "url");
-        String login = properties.getProperty(hc + "username");
-        String password = properties.getProperty(hc + "password");
-        try {
-            connection = DriverManager.getConnection(url, login, password);
-        } catch (SQLException e) {
+            Class.forName(properties.getProperty("hibernate.connection.driver_class"));
+            connection = DriverManager.getConnection(
+                    properties.getProperty("hibernate.connection.url"),
+                    properties.getProperty("hibernate.connection.username"),
+                    properties.getProperty("hibernate.connection.password")
+            );
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -99,29 +95,28 @@ public class TableEditor implements AutoCloseable {
         }
     }
 
-    private static Properties getProperties(String nameFile) {
+    public static void main(String[] args) {
         Properties properties = new Properties();
-        ClassLoader loader = TableEditor.class.getClassLoader();
-        try (InputStream in = loader.getResourceAsStream(nameFile)) {
+        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream(
+                "postgres.properties")) {
             properties.load(in);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return properties;
-    }
-
-    public static void main(String[] args) {
-        TableEditor tableEditor = new TableEditor(getProperties("postgres.properties"));
-        tableEditor.createTable("create_test");
-        System.out.println(getTableScheme(tableEditor.connection, "create_test"));
-        tableEditor.addColumn("create_test", "id", "serial PRIMARY KEY");
-        tableEditor.addColumn("create_test", "name", "varchar(255)");
-        tableEditor.addColumn("create_test", "age", "int");
-        System.out.println(getTableScheme(tableEditor.connection, "create_test"));
-        tableEditor.renameColumn("create_test", "name", "surname");
-        System.out.println(getTableScheme(tableEditor.connection, "create_test"));
-        tableEditor.dropColumn("create_test", "age");
-        System.out.println(getTableScheme(tableEditor.connection, "create_test"));
-        tableEditor.dropTable("create_test");
+        try (TableEditor tableEditor = new TableEditor(properties)) {
+            tableEditor.createTable("create_test");
+            System.out.println(getTableScheme(tableEditor.connection, "create_test"));
+            tableEditor.addColumn("create_test", "id", "serial PRIMARY KEY");
+            tableEditor.addColumn("create_test", "name", "varchar(255)");
+            tableEditor.addColumn("create_test", "age", "int");
+            System.out.println(getTableScheme(tableEditor.connection, "create_test"));
+            tableEditor.renameColumn("create_test", "name", "surname");
+            System.out.println(getTableScheme(tableEditor.connection, "create_test"));
+            tableEditor.dropColumn("create_test", "age");
+            System.out.println(getTableScheme(tableEditor.connection, "create_test"));
+            tableEditor.dropTable("create_test");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

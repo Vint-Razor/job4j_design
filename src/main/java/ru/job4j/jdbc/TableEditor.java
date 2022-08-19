@@ -66,7 +66,7 @@ public class TableEditor implements AutoCloseable {
         buffer.add(header);
         try (var statement = connection.createStatement()) {
             var selection = statement.executeQuery(String.format(
-                    "select * from %s limit 1;", tableName
+                    "SELECT * FROM %s LIMIT 1;", tableName
             ));
             var metaData = selection.getMetaData();
             for (int i = 1; i <= metaData.getColumnCount(); i++) {

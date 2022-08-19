@@ -28,8 +28,10 @@ public class TableEditor implements AutoCloseable {
                     properties.getProperty("hibernate.connection.password")
             );
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("Неправильные значения в конфигарационном файле,"
+                    + "либо сервер БД недоступен, поэтому соединение невозможно");
         }
+
     }
 
     public void createTable(String tableName) {

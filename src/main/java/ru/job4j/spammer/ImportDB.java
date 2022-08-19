@@ -25,8 +25,8 @@ public class ImportDB {
     public List<User> load() throws IOException {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
-            rd.lines().forEach(s -> {
-               String[] arr = s.split(";", 2);
+            rd.lines().forEach(str -> {
+               String[] arr = str.split(";", 2);
                 if (arr[0].isEmpty() || arr[1].isEmpty()) {
                     return;
                 }

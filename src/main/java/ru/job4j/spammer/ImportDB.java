@@ -27,9 +27,7 @@ public class ImportDB {
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(str -> {
                String[] arr = str.split(";", 2);
-                if (arr[0].isEmpty() || arr[1].isEmpty()) {
-                    return;
-                }
+                validator(arr);
                users.add(new User(arr[0], arr[1]));
             });
         }
@@ -61,6 +59,13 @@ public class ImportDB {
                     ps.execute();
                 }
             }
+        }
+    }
+
+    private static void validator(String[] arr) {
+        if (arr.length != 2 || arr[0].isEmpty() || arr[1].isEmpty()) {
+            throw new IllegalArgumentException("Неправильно заполнен исходный файл,"
+                    + " либо содержит пустые строки.\n Пример заполнения: name;e-mail;");
         }
     }
 

@@ -85,10 +85,16 @@ public class PreparedStatementDemo {
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-//        City city = new City(1, "Budapest", 2_300_000);
+        /*
+        City city = new City(1, "Budapest", 2_300_000);
+
+         */
         PreparedStatementDemo preparedStatement = new PreparedStatementDemo();
-//        preparedStatement.insert(city);
-//        System.out.println(city);
+        /*
+        preparedStatement.insert(city);
+        System.out.println(city);
+
+         */
         preparedStatement.findAll().forEach(System.out::println);
     }
 }

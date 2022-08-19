@@ -36,7 +36,14 @@ public class ImportDB {
         return users;
     }
 
-    private static record User(String name, String email) {
+    private static class User {
+        String name;
+        String email;
+
+        public User(String name, String email) {
+            this.name = name;
+            this.email = email;
+        }
     }
 
     public void save(List<User> users) throws ClassNotFoundException, SQLException {

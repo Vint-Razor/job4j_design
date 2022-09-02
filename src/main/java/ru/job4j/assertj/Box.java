@@ -20,7 +20,7 @@ public class Box {
             default -> UNKNOWN;
         };
         if (UNKNOWN.equals(type)) {
-            vertex = -1; type = UNKNOWN;
+            vertex = -1;
         }
         if (edge <= 0) {
             vertex = -1; type = UNKNOWN;

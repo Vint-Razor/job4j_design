@@ -31,6 +31,23 @@ public class NameLoad {
                     String.format("this name: %s does not contain the symbol \"=\"", name)
             );
         }
-        //TODO продолжить метод
+        if (name.startsWith("=")) {
+            throw new IllegalArgumentException(
+                    String.format("this name: %s does not contain a key", name)
+            );
+        }
+        if (name.indexOf("=") == name.length() - 1) {
+            throw new IllegalArgumentException(
+                    String.format("this name: %s does not contain a value", name)
+            );
+        }
+        return true;
+    }
+
+    public Map<String, String> getMap() {
+        if (values.isEmpty()) {
+            throw new IllegalStateException("collection contains no data");
+        }
+        return values;
     }
 }

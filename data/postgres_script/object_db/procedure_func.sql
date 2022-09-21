@@ -1,4 +1,7 @@
-
+/*
+delete_zero_row() - процедура удаления строк с нулевым значением count
+f_delete_row(u_id integer) - функция удаления строки по индесу
+*/
 DELETE FROM products;
 ALTER SEQUENCE products_id_seq RESTART WITH 1;
 

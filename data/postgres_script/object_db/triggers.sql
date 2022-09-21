@@ -7,6 +7,7 @@ create table products (
     price integer
 );
 
+--Триггер должен срабатывать после вставки данных, statement уровень
 create or replace function tax()
 	returns trigger as
 $$
@@ -24,14 +25,13 @@ create trigger tax_trigger
 	referencing new table as inserted
 	for each statement
 	execute procedure tax();
-
+	
+-- Триггер должен срабатывать до вставки данных, row уровень
 create or replace function tax_row()
 	returns trigger as
 $$
 	BEGIN
-		update products
-		set price = price + price * 0.18
-		where id = new.id;
+		new.price = new.price + new.price * 0.18;
 		return new;
 	END;
 $$
@@ -50,6 +50,7 @@ create table history_of_price (
 	date TIMESTAMP
 );
 
+--триггер на row уровне, при вставке продукта заносить в таблицу history_of_price.
 create or replace function save()
 	returns trigger as
 $$
@@ -73,8 +74,7 @@ insert into products (name, producer, count, price)
 values ('prod_22', 'producer_22', 48, 100);
 
 select p.name as наименование,
-p.price as "цена с НДС",
-h.price as "цена без НДС"
+p.price as "цена после прихода",
+h.price as "цена до прихода"
 from products as p
 join history_of_price as h on p."name" = h."name";
-

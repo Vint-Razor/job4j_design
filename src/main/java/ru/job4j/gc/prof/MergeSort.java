@@ -15,7 +15,7 @@ public class MergeSort implements Sort {
 
     private int[] sort(int[] array, int from, int to) {
         if (from == to) {
-            return new int[] {array[from]};
+            return new int[]{array[from]};
         }
         int mid = (from + to) / 2;
         return merge(

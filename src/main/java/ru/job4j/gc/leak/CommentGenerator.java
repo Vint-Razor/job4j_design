@@ -1,6 +1,5 @@
 package ru.job4j.gc.leak;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,12 +7,12 @@ import java.util.Random;
 public class CommentGenerator implements Generate {
     public static final String PATH_PHRASES = "src/main/java/ru/job4j/gc/leak/files/phrases.txt";
 
-    public static final String SEPARATOR = System.lineSeparator();
-    private static List<Comment> comments = new ArrayList<>();
-    public static final Integer COUNT = 50;
-    private static List<String> phrases;
-    private UserGenerator useGenerator;
-    private Random random;
+    private static final String SEPARATOR = System.lineSeparator();
+    private static final List<Comment> COMMENTS = new ArrayList<>();
+    private static final int COUNT = 50;
+    private List<String> phrases;
+    private final UserGenerator useGenerator;
+    private final Random random;
 
     public CommentGenerator(Random random, UserGenerator useGenerator) {
         this.useGenerator = useGenerator;
@@ -22,30 +21,27 @@ public class CommentGenerator implements Generate {
     }
 
     private void read() {
-        try {
-            phrases = read(PATH_PHRASES);
-
-        } catch (IOException e) {
-            throw new IllegalArgumentException(e);
-        }
+        phrases = read(PATH_PHRASES);
     }
 
     public static List<Comment> getComments() {
-        return comments;
+        return COMMENTS;
     }
 
     @Override
     public void generate() {
-        comments.clear();
+        COMMENTS.clear();
+        StringBuilder builder = new StringBuilder();
         for (int i = 0; i < COUNT; i++) {
-            String comment = String.format("%s%s%s%s%s",
-                    phrases.get(random.nextInt(phrases.size())), SEPARATOR,
-                    phrases.get(random.nextInt(phrases.size())), SEPARATOR,
-                    phrases.get(random.nextInt(phrases.size()))
-            );
-            comments.add(new Comment(comment,
+            builder.append(phrases.get(random.nextInt(phrases.size())));
+            builder.append(SEPARATOR);
+            builder.append(phrases.get(random.nextInt(phrases.size())));
+            builder.append(SEPARATOR);
+            builder.append(phrases.get(random.nextInt(phrases.size())));
+            COMMENTS.add(new Comment(builder.toString(),
                     useGenerator.randomUser()
             ));
+            builder.setLength(0);
         }
     }
 }

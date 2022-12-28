@@ -1,6 +1,7 @@
 package ru.job4j.gc.leak;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Post {
     private Integer id;
@@ -43,7 +44,19 @@ public class Post {
     }
 
     @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Post post = (Post) o;
+        return Objects.equals(id, post.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

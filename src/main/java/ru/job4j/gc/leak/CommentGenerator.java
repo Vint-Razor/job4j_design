@@ -8,7 +8,7 @@ public class CommentGenerator implements Generate {
     public static final String PATH_PHRASES = "src/main/java/ru/job4j/gc/leak/files/phrases.txt";
 
     private static final String SEPARATOR = System.lineSeparator();
-    private static final List<Comment> COMMENTS = new ArrayList<>();
+    private final List<Comment> comments = new ArrayList<>();
     private static final int COUNT = 50;
     private List<String> phrases;
     private final UserGenerator useGenerator;
@@ -24,13 +24,13 @@ public class CommentGenerator implements Generate {
         phrases = read(PATH_PHRASES);
     }
 
-    public static List<Comment> getComments() {
-        return COMMENTS;
+    public List<Comment> getComments() {
+        return comments;
     }
 
     @Override
     public void generate() {
-        COMMENTS.clear();
+        comments.clear();
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < COUNT; i++) {
             builder.append(phrases.get(random.nextInt(phrases.size())));
@@ -38,7 +38,7 @@ public class CommentGenerator implements Generate {
             builder.append(phrases.get(random.nextInt(phrases.size())));
             builder.append(SEPARATOR);
             builder.append(phrases.get(random.nextInt(phrases.size())));
-            COMMENTS.add(new Comment(builder.toString(),
+            comments.add(new Comment(builder.toString(),
                     useGenerator.randomUser()
             ));
             builder.setLength(0);

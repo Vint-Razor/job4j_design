@@ -6,10 +6,9 @@ import java.util.Random;
 
 public class CommentGenerator implements Generate {
     public static final String PATH_PHRASES = "src/main/java/ru/job4j/gc/leak/files/phrases.txt";
-
     private static final String SEPARATOR = System.lineSeparator();
-    private final List<Comment> comments = new ArrayList<>();
     private static final int COUNT = 50;
+    private final List<Comment> comments = new ArrayList<>();
     private List<String> phrases;
     private final UserGenerator useGenerator;
     private final Random random;

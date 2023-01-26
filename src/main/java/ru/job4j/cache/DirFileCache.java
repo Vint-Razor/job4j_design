@@ -23,7 +23,7 @@ public class DirFileCache extends AbstractCache<String, String> {
         return str;
     }
 
-    private void validator(String path) {
+    private void validate(String path) {
         File file = new File(path);
         if (!file.isDirectory()) {
             throw new IllegalArgumentException(String.format("%s не является папкой", path));
@@ -32,7 +32,12 @@ public class DirFileCache extends AbstractCache<String, String> {
 
     @Override
     protected String load(String key) {
-        validator(cachingDir);
+        validate(cachingDir);
         return getFile(Path.of(cachingDir + "//" + key));
+        /*
+        Должен создавать объект типа DirFileCache.
+        Key это относительный путь к файлу в директории.
+         */
+
     }
 }

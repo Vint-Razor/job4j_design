@@ -17,15 +17,15 @@ public class DirFileCache extends AbstractCache<String, String> {
         this.cachingDir = cachingDir;
     }
 
-    private String getFile(Path path) {
+    private String readFile(Path path) {
         String str;
+        if (!path.toString().endsWith(".txt")) {
+            throw new IllegalArgumentException(String.format("%s файл должен иметь расширение \".txt\"", path));
+        }
         try {
             str = Files.readString(path);
         } catch (IOException e) {
             throw new IllegalArgumentException(String.format("%s файл не найден", path));
-        }
-        if (!path.endsWith(".txt")) {
-            throw new IllegalArgumentException(String.format("%s файл должен иметь расширение \".txt\"", str));
         }
         return str;
     }
@@ -45,6 +45,6 @@ public class DirFileCache extends AbstractCache<String, String> {
      */
     @Override
     protected String load(String key) {
-        return getFile(Path.of(cachingDir, key));
+        return readFile(Path.of(cachingDir, key));
     }
 }

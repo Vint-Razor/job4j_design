@@ -33,7 +33,8 @@ public abstract class AbstractCache<K, V> {
      * @return значение
      */
     public V get(K key) {
-        return cache.getOrDefault(key, new SoftReference<>(load(key))).get();
+        cache.putIfAbsent(key, new SoftReference<>(load(key)));
+        return cache.get(key).get();
     }
 
     protected abstract V load(K key);

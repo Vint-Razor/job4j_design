@@ -37,6 +37,12 @@ public class DirFileCache extends AbstractCache<String, String> {
         }
     }
 
+    /**
+     * метод загружает в кэш содержимое файла, если нет такого ключа
+     *
+     * @param key это относительный путь к файлу в директории.
+     * @return содержимое файла
+     */
     @Override
     protected String load(String key) {
         return getFile(Path.of(cachingDir, key));

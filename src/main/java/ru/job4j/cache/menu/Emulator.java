@@ -15,6 +15,11 @@ import java.util.Scanner;
  */
 public class Emulator {
     private static final String INPUT_NUM_1_2_3 = "введите число от 1 до 3";
+    private static final String MENU = """
+                   ************  Меню  **************
+                1. загрузить содержимое файла в кэш
+                2. получить содержимое файла из кэша
+                3. выход""";
     private AbstractCache<String, String> cache;
     private final Scanner scanner;
 
@@ -23,11 +28,7 @@ public class Emulator {
     }
 
     public void showMenu() {
-        System.out.println("""
-                   ************  Меню  **************
-                1. загрузить содержимое файла в кэш
-                2. получить содержимое файла из кэша
-                3. выход""");
+        System.out.println(MENU);
     }
 
     public int answers() {

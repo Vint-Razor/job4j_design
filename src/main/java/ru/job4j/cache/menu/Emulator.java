@@ -3,6 +3,7 @@ package ru.job4j.cache.menu;
 import ru.job4j.cache.AbstractCache;
 import ru.job4j.cache.DirFileCache;
 
+import java.io.File;
 import java.util.Scanner;
 
 /**
@@ -13,7 +14,8 @@ import java.util.Scanner;
  * - получить содержимое файла из кэша
  */
 public class Emulator {
-    private AbstractCache<String, String> dirFileCache;
+    private static final String INPUT_NUM_1_2_3 = "введите число от 1 до 3";
+    private AbstractCache<String, String> cache;
     private final Scanner scanner;
 
     public Emulator(Scanner scanner) {
@@ -37,29 +39,37 @@ public class Emulator {
                 if (answer >= 1 && answer <= 3) {
                     invalid = false;
                 } else {
-                    System.out.println("введите число от 1 до 3");
+                    System.out.println(INPUT_NUM_1_2_3);
                 }
             } catch (NumberFormatException nfe) {
-                System.out.println("введите число от 1 до 3");
+                System.out.println(INPUT_NUM_1_2_3);
             }
         } while (invalid);
         return answer;
     }
 
+    private void validate(String path) {
+        File file = new File(path);
+        if (!file.isDirectory()) {
+            throw new IllegalArgumentException(String.format("%s не является папкой", path));
+        }
+    }
+
     public void start() {
         System.out.println("Старт программы =Кэш=\nукажите директорию кэширования: ");
         String path = scanner.nextLine();
-        dirFileCache = new DirFileCache(path);
+        validate(path);
+        cache = new DirFileCache(path);
     }
 
     public String getFile() {
         System.out.println("укажите файл");
         String file = scanner.nextLine();
-        return dirFileCache.get(file);
-    }
-
-    public void printFile() {
-        System.out.println(getFile());
+        if (!file.endsWith(".txt")) {
+            throw new IllegalArgumentException(
+                    String.format("%s файл должен иметь расширение \".txt\"", file));
+        }
+        return cache.get(file);
     }
 
     public static void main(String[] args) {
@@ -74,8 +84,9 @@ public class Emulator {
                 emulator.getFile();
             }
             if (2 == answer) {
-                emulator.printFile();
+                System.out.println(emulator.getFile());
             }
         }
+        System.out.println("выход");
     }
 }

@@ -17,6 +17,8 @@ public class Emulator {
     private static final int LOAD = 1;
     private static final int PRINT = 2;
     private static final int EXIT = 3;
+    private static final String ASK_FILE = "укажите файл";
+    private static final String INPUT_DIR = "Укажите директорию кэширования: ";
     private static final String INPUT_NUM_1_2_3 = "введите число от 1 до 3";
     private static final String MENU = """
                    ************  Меню  **************
@@ -36,7 +38,7 @@ public class Emulator {
         do {
             try {
                 answer = Integer.parseInt(scanner.nextLine());
-                if (answer >= 1 && answer <= 3) {
+                if (answer >= LOAD && answer <= EXIT) {
                     invalid = false;
                 } else {
                     System.out.println(INPUT_NUM_1_2_3);
@@ -56,14 +58,14 @@ public class Emulator {
     }
 
     public void start() {
-        System.out.println("Старт программы =Кэш=\nукажите директорию кэширования: ");
+        System.out.println(INPUT_DIR);
         String path = scanner.nextLine();
         validate(path);
         cache = new DirFileCache(path);
     }
 
     public String getFile() {
-        System.out.println("укажите файл");
+        System.out.println(ASK_FILE);
         String file = scanner.nextLine();
         if (!file.endsWith(".txt")) {
             throw new IllegalArgumentException(

@@ -14,6 +14,9 @@ import java.util.Scanner;
  * - получить содержимое файла из кэша
  */
 public class Emulator {
+    private static final int LOAD = 1;
+    private static final int PRINT = 2;
+    private static final int EXIT = 3;
     private static final String INPUT_NUM_1_2_3 = "введите число от 1 до 3";
     private static final String MENU = """
                    ************  Меню  **************
@@ -25,10 +28,6 @@ public class Emulator {
 
     public Emulator(Scanner scanner) {
         this.scanner = scanner;
-    }
-
-    public void showMenu() {
-        System.out.println(MENU);
     }
 
     public int answers() {
@@ -78,13 +77,13 @@ public class Emulator {
         Emulator emulator = new Emulator(scanner);
         emulator.start();
         int answer = 0;
-        while (3 != answer) {
-            emulator.showMenu();
+        while (EXIT != answer) {
+            System.out.println(MENU);
             answer = emulator.answers();
-            if (1 == answer) {
+            if (LOAD == answer) {
                 emulator.getFile();
             }
-            if (2 == answer) {
+            if (PRINT == answer) {
                 System.out.println(emulator.getFile());
             }
         }

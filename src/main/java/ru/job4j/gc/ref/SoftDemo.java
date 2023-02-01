@@ -3,14 +3,15 @@ package ru.job4j.gc.ref;
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class SoftDemo {
-    public static void main(String[] args) {
-
-        example1();
+    public static void main(String[] args) throws InterruptedException {
         /*
-        example2();
+        example1();
         */
+        example2();
+
     }
     private static void example1() {
         Object strong = new Object();
@@ -19,9 +20,9 @@ public class SoftDemo {
         System.out.println(soft.get());
     }
 
-    private static void example2() {
+    private static void example2() throws InterruptedException {
         List<SoftReference<Object>> objects = new ArrayList<>();
-        for (int i = 0; i < 100_000_000; i++) {
+        for (int i = 0; i < 10_000_000; i++) {
             objects.add(new SoftReference<Object>(new Object() {
                 String value = String.valueOf(System.currentTimeMillis());
 
@@ -32,6 +33,8 @@ public class SoftDemo {
             }));
         }
         System.gc();
+        TimeUnit.SECONDS.sleep(2);
+        System.out.println("GC");
         int liveObject = 0;
         for (SoftReference<Object> ref : objects) {
             Object object = ref.get();

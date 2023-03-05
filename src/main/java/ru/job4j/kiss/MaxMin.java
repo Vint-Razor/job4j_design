@@ -17,7 +17,7 @@ public class MaxMin {
     }
 
     private <T> T loop(List<T> values, Comparator<T> comparator, Predicate<Integer> predicate) {
-        T result = values.get(0);
+        T result = values.isEmpty() ? null : values.get(0);
         for (T val : values) {
             result = predicate.test(comparator.compare(result, val)) ? val : result;
         }

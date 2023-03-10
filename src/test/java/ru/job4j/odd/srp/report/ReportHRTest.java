@@ -19,8 +19,10 @@ class ReportHRTest {
         Calendar now = Calendar.getInstance();
         Employee jim = new Employee("Jim", now, now, 1000);
         Employee bill = new Employee("Bill", now, now, 500);
+        Employee sam = new Employee("Sam", now, now, 800);
         store.add(jim);
         store.add(bill);
+        store.add(sam);
         Comparator<Employee> comparator = new CompareBySalary();
         Report report = new ReportHR(store, comparator);
         String expected = report.generate(rm -> true);
@@ -29,6 +31,9 @@ class ReportHRTest {
                 .append(System.lineSeparator())
                 .append(jim.getName()).append(" ")
                 .append(jim.getSalary())
+                .append(System.lineSeparator())
+                .append(sam.getName()).append(" ")
+                .append(sam.getSalary())
                 .append(System.lineSeparator())
                 .append(bill.getName()).append(" ")
                 .append(bill.getSalary())

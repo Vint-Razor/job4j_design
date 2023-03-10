@@ -25,7 +25,7 @@ class ReportAccountingTest {
         DateTimeParser<Calendar> parser = new ReportDateTimeParser();
         memStore.add(bill);
         CurrencyConverter converter = new InMemoryCurrencyConverter();
-        Report report = new ReportAccounting(memStore, converter, Currency.RUB, Currency.USD);
+        Report report = new ReportAccounting(memStore, parser, converter, Currency.USD, Currency.RUB);
         String expected = report.generate(em -> true);
         StringBuilder actual = new StringBuilder()
                 .append("Name; Hired; Fired; Salary;")

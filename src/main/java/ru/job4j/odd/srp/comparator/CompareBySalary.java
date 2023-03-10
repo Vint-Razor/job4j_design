@@ -8,6 +8,6 @@ public class CompareBySalary implements Comparator<Employee> {
 
     @Override
     public int compare(Employee em1, Employee em2) {
-        return Double.compare(em1.getSalary(), em2.getSalary());
+        return Double.compare(em2.getSalary(), em1.getSalary());
     }
 }

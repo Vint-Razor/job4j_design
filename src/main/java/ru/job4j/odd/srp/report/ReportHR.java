@@ -4,6 +4,7 @@ import ru.job4j.odd.srp.model.Employee;
 import ru.job4j.odd.srp.store.Store;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class ReportHR implements Report {
@@ -17,6 +18,16 @@ public class ReportHR implements Report {
 
     @Override
     public String generate(Predicate<Employee> filter) {
-        return null;
+        List<Employee> employees = store.findBy(filter);
+        employees.sort(comparator);
+        StringBuilder sb = new StringBuilder()
+                .append("Name; Salary;")
+                .append(System.lineSeparator());
+        for (Employee emp : employees) {
+            sb.append(emp.getName()).append(" ")
+                    .append(emp.getSalary())
+                    .append(System.lineSeparator());
+        }
+        return sb.toString();
     }
 }

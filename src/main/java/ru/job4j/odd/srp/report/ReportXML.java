@@ -1,6 +1,5 @@
 package ru.job4j.odd.srp.report;
 
-import ru.job4j.odd.srp.formatter.DateTimeParser;
 import ru.job4j.odd.srp.model.Employee;
 import ru.job4j.odd.srp.store.Store;
 
@@ -9,15 +8,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.Calendar;
 import java.util.function.Predicate;
 
 public class ReportXML implements Report {
     private final Store memStore;
-    private final DateTimeParser<Calendar> dateTimeParser;
 
-    public ReportXML(Store memStore, DateTimeParser<Calendar> dateTimeParser) {
-        this.dateTimeParser = dateTimeParser;
+    public ReportXML(Store memStore) {
         this.memStore = memStore;
     }
 

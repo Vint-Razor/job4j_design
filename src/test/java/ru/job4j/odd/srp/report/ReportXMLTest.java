@@ -9,7 +9,7 @@ import ru.job4j.odd.srp.store.Store;
 
 import java.util.Calendar;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ReportXMLTest {
 
@@ -20,14 +20,13 @@ class ReportXMLTest {
         Employee john = new Employee("John", now, now, 500);
         DateTimeParser<Calendar> dateTimeParser = new ReportDateTimeParser();
         memStore.add(john);
-        Report reportXML = new ReportXML(memStore, dateTimeParser);
-        String actual = reportXML.generate(emp -> true);
-        StringBuilder expected = new StringBuilder()
-                .append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>").append(System.lineSeparator())
-                .append("<employee name=\"John\" salary=\"500.0\">").append(System.lineSeparator())
-                        .append("<hired>2023-03-14T20:59:48.114+05:00</hired>").append(System.lineSeparator())
-                        .append("<fired>2023-03-14T20:59:48.114+05:00</fired>").append(System.lineSeparator())
-                        .append("</employee>").append(System.lineSeparator());
-        assertThat(expected.toString()).isEqualTo(actual);
+        Report reportXML = new ReportXML(memStore);
+        String expect = reportXML.generate(emp -> true);
+        String actual = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
+                + "<employee name=\"John\" salary=\"500.0\">\n"
+                + "    <hired>" + dateTimeParser.parse(john.getHired()) + "</hired>\n"
+                + "    <fired>" + dateTimeParser.parse(john.getFired()) + "</fired>\n"
+                + "</employee>\n";
+        assertThat(actual).isEqualTo(expect);
     }
 }

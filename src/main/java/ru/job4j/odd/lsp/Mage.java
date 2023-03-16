@@ -11,6 +11,12 @@ public class Mage {
         this.mana = mana;
     }
 
+    public void spell() {
+        if (mana < 1) {
+            throw new IllegalArgumentException("нужно больше магии");
+        }
+    }
+
     public String getName() {
         return name;
     }

@@ -9,11 +9,12 @@ public abstract class Food {
     private double price;
     private int discount;
 
-    public Food(String name, LocalDate expiryDate, LocalDate createDate, double price) {
+    public Food(String name, LocalDate expiryDate, LocalDate createDate, double price, int discount) {
         this.name = name;
         this.expiryDate = expiryDate;
         this.createDate = createDate;
         this.price = price;
+        this.discount = discount;
     }
 
     public String getName() {

@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,10 +16,13 @@ class TrashTest {
         Trash trash = new Trash();
         Shop shop = new Shop();
         Warehouse warehouse = new Warehouse();
-        List<Store> listStore = List.of(trash, shop, warehouse);
+        Map<String, Store> storeMap = new HashMap<>();
+        storeMap.put(trash.getName(), trash);
+        storeMap.put(shop.getName(), shop);
+        storeMap.put(warehouse.getName(), warehouse);
         Food milk = new Milk("Milk", LocalDate.of(2023, Calendar.MARCH, 10)
-                , LocalDate.of(2023, Calendar.MARCH, 6), 56.0d);
-        ControlQuality controlQuality = new ControlQuality(listStore);
+                , LocalDate.of(2023, Calendar.MARCH, 6), 56.0d, 20);
+        ControlQuality controlQuality = new ControlQuality(storeMap);
         controlQuality.checkFood(milk);
         assertThat(trash.getFoodList()).contains(milk);
     }

@@ -17,14 +17,18 @@ public class ControlQuality {
         if (food.getExpiryDate().isBefore(now)) {
             storeMap.get("Trash").addFoodList(food);
         }
-        if (calcExpirationPer(food) <= 75 && calcExpirationPer(food) >= 25) {
+        int expirationPer = calcExpirationPer(food);
+        if (expirationPer <= 75 && expirationPer >= 25) {
             storeMap.get("Shop").addFoodList(food);
         }
-        if (calcExpirationPer(food) > 75) {
+        if (expirationPer > 75) {
             double price = food.getPrice();
             double newPrice = price - (price * food.getDiscount() / 100);
             food.setPrice(newPrice);
             storeMap.get("Shop").addFoodList(food);
+        }
+        if (expirationPer < 25) {
+            storeMap.get("Warehouse").addFoodList(food);
         }
     }
 

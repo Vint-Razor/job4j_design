@@ -28,4 +28,9 @@ public class AutoParking implements Parking {
     public void deleteAuto(Auto auto) {
         autoList.remove(auto);
     }
+
+    @Override
+    public int getOccupiedPlaces() {
+        return 0;
+    }
 }

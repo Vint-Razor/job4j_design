@@ -9,4 +9,6 @@ public interface Parking {
     void addListAuto(Auto auto);
 
     void deleteAuto(Auto auto);
+
+    int getOccupiedPlaces();
 }

@@ -1,34 +1,34 @@
 package ru.job4j.odd.lsp.storage;
 
 import java.time.LocalDate;
-import java.util.Map;
+import java.util.List;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class ControlQuality {
-    private final Map<String, Store> storeMap;
+    private final List<Store> storeList;
 
-    public ControlQuality(Map<String, Store> storeMap) {
-        this.storeMap = storeMap;
+    public ControlQuality(List<Store> storeList) {
+        this.storeList = storeList;
     }
 
     public void checkFood(Food food) {
         LocalDate now = LocalDate.now();
         if (food.getExpiryDate().isBefore(now)) {
-            storeMap.get("Trash").addFoodList(food);
+            storeList.get(0).addFoodList(food);
         }
         int expirationPer = calcExpirationPer(food);
         if (expirationPer <= 75 && expirationPer >= 25) {
-            storeMap.get("Shop").addFoodList(food);
+            storeList.get(1).addFoodList(food);
         }
         if (expirationPer > 75) {
             double price = food.getPrice();
             double newPrice = price - (price * food.getDiscount() / 100);
             food.setPrice(newPrice);
-            storeMap.get("Shop").addFoodList(food);
+            storeList.get(1).addFoodList(food);
         }
         if (expirationPer < 25) {
-            storeMap.get("Warehouse").addFoodList(food);
+            storeList.get(2).addFoodList(food);
         }
     }
 

@@ -9,9 +9,9 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class AutoParkingTest {
-    private final int CARS_CAPACITY = 10;
-    private final int TRUCKS_CAPACITY = 5;
-    private final Parking autoParking = new AutoParking(CARS_CAPACITY, TRUCKS_CAPACITY);
+    private final int carsCapacity = 10;
+    private final int trucksCapacity = 5;
+    private final Parking autoParking = new AutoParking(carsCapacity, trucksCapacity);
     private final Auto car = new Car("123");
     private final Auto car2 = new Car("234");
     private final Auto truck = new Truck("2d3");

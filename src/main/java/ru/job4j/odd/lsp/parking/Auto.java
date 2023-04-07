@@ -1,6 +1,42 @@
 package ru.job4j.odd.lsp.parking;
 
-public interface Auto {
+import java.util.Objects;
 
-    int getSize();
+public abstract class Auto {
+    private int size;
+    private String number;
+
+    public Auto(int size, String number) {
+        this.size = size;
+        this.number = number;
+    }
+
+    public int getSize() {
+         return size;
+     }
+
+    @Override
+    public String toString() {
+        return "Auto{"
+                + "size=" + size
+                + ", number='" + number + '\''
+                + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Auto auto = (Auto) o;
+        return Objects.equals(number, auto.number);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number);
+    }
 }

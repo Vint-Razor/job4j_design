@@ -1,14 +1,13 @@
 package ru.job4j.odd.lsp.parking;
 
 import java.util.List;
+import java.util.Set;
 
 public interface Parking {
 
-    List<Auto> getListAuto();
-
     void addListAuto(Auto auto);
 
-    void deleteAuto(Auto auto);
+    boolean deleteAuto(Auto auto);
 
-    int getOccupiedPlaces();
+    Set<Auto> getListAuto();
 }

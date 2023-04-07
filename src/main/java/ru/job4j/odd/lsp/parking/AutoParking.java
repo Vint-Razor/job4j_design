@@ -8,17 +8,18 @@ import java.util.function.Predicate;
 
 public class AutoParking implements Parking {
     private static final int CAR_SIZE = 1;
-    private final int capacityCars;
-    private final int capacityTracks;
-    private final List<Auto> carList = new LinkedList<>();
-    private final List<Auto> truckList = new LinkedList<>();
+    private int freeSpaceCar;
+    private int freeSpaceTruck;
+    private final Set<Auto> carSet = new HashSet<>();
+    private final Set<Auto> truckSet = new HashSet<>();
+    private final List<Set<Auto>> allAutoSets = List.of(carSet, truckSet);
     private final Predicate<Auto> compareSize = a -> a.getSize() > CAR_SIZE;
 
 
     public AutoParking(int cars, int tracks) {
         validator(cars, tracks);
-        this.capacityCars = cars;
-        this.capacityTracks = tracks;
+        this.freeSpaceCar = cars;
+        this.freeSpaceTruck = tracks;
     }
 
     private void validator(int cars, int tracks) {
@@ -28,24 +29,43 @@ public class AutoParking implements Parking {
     }
 
     @Override
-    public Set<Auto> getListAuto() {
-        Set<Auto> set = new HashSet<>(carList);
-        set.addAll(truckList);
-        return set;
+    public List<Auto> getListAuto() {
+        List<Auto> list = new LinkedList<>();
+        for (Set<Auto> autoSet : allAutoSets) {
+            list.addAll(autoSet);
+        }
+        return list;
     }
 
     @Override
-    public void addListAuto(Auto auto) {
-        if (isTruck(auto)) {
-            truckList.add(auto);
-        } else {
-            carList.add(auto);
+    public boolean addAuto(Auto auto) {
+        boolean added = false;
+        if (isTruck(auto) && freeSpaceTruck > 0) {
+            truckSet.add(auto);
+            freeSpaceTruck -= 1;
+            added = true;
+        } else if (freeSpaceCar > 0 && freeSpaceCar >= auto.getSize()) {
+            carSet.add(auto);
+            freeSpaceCar -= auto.getSize();
+            added = true;
         }
+        return added;
     }
 
     @Override
     public boolean deleteAuto(Auto auto) {
-        return getListAuto().remove(auto);
+        boolean removed = false;
+        for (Set<Auto> autoSet : allAutoSets) {
+            if (autoSet.remove(auto)) {
+                removed = true;
+            }
+        }
+        return removed;
+    }
+
+    @Override
+    public void deleteAllAutos() {
+        allAutoSets.forEach(Set::clear);
     }
 
     private boolean isTruck(Auto auto) {

@@ -6,9 +6,4 @@ public class Car extends Auto {
     public Car(String number) {
         super(CAR_SIZE, number);
     }
-
-    @Override
-    public int getSize() {
-        return CAR_SIZE;
-    }
 }

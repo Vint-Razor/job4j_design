@@ -6,9 +6,4 @@ public class Truck extends Auto {
     public Truck(String number) {
         super(TRUCK_SIZE, number);
     }
-
-    @Override
-    public int getSize() {
-        return TRUCK_SIZE;
-    }
 }

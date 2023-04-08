@@ -15,7 +15,6 @@ public class AutoParking implements Parking {
     private final List<Set<Auto>> allAutoSets = List.of(carSet, truckSet);
     private final Predicate<Auto> compareSize = a -> a.getSize() > CAR_SIZE;
 
-
     public AutoParking(int cars, int tracks) {
         validator(cars, tracks);
         this.freeSpaceCar = cars;

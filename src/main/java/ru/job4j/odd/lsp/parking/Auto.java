@@ -49,6 +49,4 @@ public abstract class Auto {
     public int hashCode() {
         return Objects.hash(number);
     }
-
-
 }

@@ -41,10 +41,12 @@ public class AutoParking implements Parking {
     public boolean addAuto(Auto auto) {
         boolean added = false;
         if (isTruck(auto) && freeSpaceTruck > 0) {
+            auto.setParked(true);
             truckSet.add(auto);
             freeSpaceTruck -= 1;
             added = true;
         } else if (freeSpaceCar > 0 && freeSpaceCar >= auto.getSize()) {
+            auto.setParked(true);
             carSet.add(auto);
             freeSpaceCar -= auto.getSize();
             added = true;
@@ -57,6 +59,7 @@ public class AutoParking implements Parking {
         boolean removed = false;
         for (Set<Auto> autoSet : allAutoSets) {
             if (autoSet.remove(auto)) {
+                auto.setParked(false);
                 removed = true;
             }
         }
@@ -65,7 +68,10 @@ public class AutoParking implements Parking {
 
     @Override
     public void deleteAllAutos() {
-        allAutoSets.forEach(Set::clear);
+        for (Set<Auto> allAutoSet : allAutoSets) {
+            allAutoSet.forEach(a -> a.setParked(false));
+            allAutoSet.clear();
+        }
     }
 
     private boolean isTruck(Auto auto) {

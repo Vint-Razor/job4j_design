@@ -1,23 +1,21 @@
 package ru.job4j.odd.lsp.parking;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@Disabled
 class AutoParkingTest {
     private final int carsCapacity = 10;
     private final int trucksCapacity = 5;
     private final Parking autoParking = new AutoParking(carsCapacity, trucksCapacity);
-    private final Auto car = new Car("car1", 1);
-    private final Auto car2 = new Car("car2", 1);
-    private final Auto truck = new Truck("truck1", 2);
-    private final Auto truck2 = new Truck("truck2", 3);
+    private final Auto car = new Car(1, "car1");
+    private final Auto car2 = new Car(1, "car2");
+    private final Auto truck = new Truck(2, "truck1");
+    private final Auto truck2 = new Truck(3, "truck2");
 
     @BeforeEach
     void before() {
@@ -56,9 +54,9 @@ class AutoParkingTest {
         int carsCapacity = 2;
         int trucksCapacity = 0;
         Parking autoParking = new AutoParking(carsCapacity, trucksCapacity);
-        Auto car = new Car("123");
-        Auto car2 = new Car("234");
-        Auto truck3 = new Truck("5d3");
+        Auto car = new Car(1, "123");
+        Auto car2 = new Car(1, "234");
+        Auto truck3 = new Truck(3, "5d3");
         autoParking.addAuto(car);
         autoParking.addAuto(car2);
         assertThat(autoParking.addAuto(truck3)).isFalse();
@@ -69,16 +67,16 @@ class AutoParkingTest {
         int carsCapacity = 4;
         int trucksCapacity = 0;
         Parking autoParking = new AutoParking(carsCapacity, trucksCapacity);
-        Auto car = new Car("123");
-        Auto truck3 = new Truck("5d3");
+        Auto car = new Car(1, "123");
+        Auto truck3 = new Truck(3, "5d3");
         autoParking.addAuto(car);
         assertThat(autoParking.addAuto(truck3)).isTrue();
     }
 
     @Test
     void whenAddTrackSizeLess2ThenExcept() {
-        Auto wrongTruck = new Truck("wrong truck", 1);
-        assertThat(autoParking.addAuto(wrongTruck)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Truck(1, "wrong truck"))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -87,8 +85,10 @@ class AutoParkingTest {
         assertThat(expected).isTrue();
     }
 
-    @AfterEach
-    void after() {
-        autoParking.deleteAllAutos();
+    @Test
+    void whenAutoNotParkedThenFalse() {
+        autoParking.deleteAuto(car);
+        boolean expected = car.isParked();
+        assertThat(expected).isFalse();
     }
 }

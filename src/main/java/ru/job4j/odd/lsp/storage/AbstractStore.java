@@ -1,6 +1,5 @@
 package ru.job4j.odd.lsp.storage;
 
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,7 +13,7 @@ public abstract class AbstractStore implements Store {
     }
 
     @Override
-    public void addFoodList(Food food) {
+    public void addFood(Food food) {
         foodList.add(food);
     }
 }

@@ -1,12 +1,16 @@
 package ru.job4j.odd.lsp.storage;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 public interface Store {
 
     List<Food> getFoodList();
 
-    void addFoodList(Food food);
+    void addFood(Food food);
 
-    String getName();
+    Predicate<Food> getCondition();
+
+    Optional<Predicate<Food>> getDiscountCondition();
 }

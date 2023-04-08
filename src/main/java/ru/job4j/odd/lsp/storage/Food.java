@@ -2,6 +2,8 @@ package ru.job4j.odd.lsp.storage;
 
 import java.time.LocalDate;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 public abstract class Food {
     private final String name;
     private final LocalDate expiryDate;
@@ -43,5 +45,12 @@ public abstract class Food {
 
     public void setDiscount(int discount) {
         this.discount = discount;
+    }
+
+    public int calcExpirationPer() {
+        double allTerm = DAYS.between(getCreateDate(), getExpiryDate());
+        double remainingTerm = DAYS.between(LocalDate.now(), getExpiryDate());
+        double leftExpirationPer = 100 - (100 / (allTerm / remainingTerm));
+        return remainingTerm < 0 ? 0 : (int) leftExpirationPer;
     }
 }

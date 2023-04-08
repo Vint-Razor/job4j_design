@@ -38,10 +38,8 @@ class ControlQualityTest {
 
     @Test
     void whereExpirationDateMore24PerThereShop() {
-        assertThat(shop.getFoodList()).contains(milkExp25)
-                .contains(milkExp75)
-                .contains(milkExp80)
-                .doesNotContain(breadExp24);
+        List<Food> expected = shop.getFoodList();
+        assertThat(expected).containsExactlyInAnyOrder(milkExp25, milkExp75, milkExp80);
     }
 
     @Test
@@ -52,16 +50,11 @@ class ControlQualityTest {
 
     @Test
     void whereExpirationLess25PerThereWarehouse() {
-        assertThat(warehouse.getFoodList()).contains(breadExp24)
-                .doesNotContain(milkExp25)
-                .doesNotContain(milkExp80);
+        assertThat(warehouse.getFoodList()).containsExactlyInAnyOrder(breadExp24);
     }
 
     @Test
     void wereExpirationDateOutThereTrash() {
-        assertThat(trash.getFoodList()).contains(juiceExpired)
-                .doesNotContain(milkExp25)
-                .doesNotContain(milkExp80)
-                .doesNotContain(breadExp24);
+        assertThat(trash.getFoodList()).containsExactlyInAnyOrder(juiceExpired);
     }
 }

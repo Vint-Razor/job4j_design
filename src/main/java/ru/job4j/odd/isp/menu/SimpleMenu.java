@@ -1,5 +1,7 @@
 package ru.job4j.odd.isp.menu;
 
+import jdk.jshell.spi.ExecutionControl;
+
 import java.util.*;
 
 public class SimpleMenu implements Menu {
@@ -8,21 +10,21 @@ public class SimpleMenu implements Menu {
 
     @Override
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
-
+        throw new UnsupportedOperationException("метод еще не реализован ");
     }
 
     @Override
     public Optional<MenuItemInfo> select(String itemName) {
-
+        throw new UnsupportedOperationException("метод еще не реализован ");
     }
 
     @Override
     public Iterator<MenuItemInfo> iterator() {
-
+        throw new UnsupportedOperationException("метод еще не реализован ");
     }
 
     private Optional<ItemInfo> findItem(String name) {
-
+        throw new UnsupportedOperationException("метод еще не реализован ");
     }
 
     private static class SimpleMenuItem implements MenuItem {

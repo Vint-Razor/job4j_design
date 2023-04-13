@@ -14,11 +14,13 @@ public class SimpleMenu implements Menu {
             rootElements.add(menuItem);
             rsl = true;
         }
-        Optional<ItemInfo> itemInfo = findItem(parentName);
-        if (parentName != null && itemInfo.isPresent()) {
-            MenuItem parentItem = itemInfo.get().menuItem;
-            parentItem.getChildren().add(menuItem);
-            rsl = true;
+        if (parentName != null) {
+            Optional<ItemInfo> itemInfo = findItem(parentName);
+            if (itemInfo.isPresent()) {
+                MenuItem parentItem = itemInfo.get().menuItem;
+                parentItem.getChildren().add(menuItem);
+                rsl = true;
+            }
         }
         return rsl;
     }

@@ -11,7 +11,7 @@ class SimpleMenuTest {
     private static final ActionDelegate STAB_ACTION = System.out::println;
 
     @Test
-    void add() {
+    void checkAdd() {
         Menu menu = new SimpleMenu();
         menu.add(Menu.ROOT, "Сходить в магазин", STAB_ACTION);
         menu.add(Menu.ROOT, "Покормить собаку", STAB_ACTION);

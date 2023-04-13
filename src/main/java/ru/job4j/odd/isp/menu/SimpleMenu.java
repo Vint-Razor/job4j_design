@@ -27,7 +27,8 @@ public class SimpleMenu implements Menu {
 
     @Override
     public Optional<MenuItemInfo> select(String itemName) {
-        throw new UnsupportedOperationException("метод еще не реализован ");
+        ItemInfo itemInfo = findItem(itemName).get();
+        return Optional.of(new MenuItemInfo(itemInfo.menuItem, itemInfo.number));
     }
 
     @Override

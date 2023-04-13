@@ -1,7 +1,5 @@
 package ru.job4j.odd.isp.menu;
 
-import jdk.jshell.spi.ExecutionControl;
-
 import java.util.*;
 
 public class SimpleMenu implements Menu {
@@ -10,7 +8,19 @@ public class SimpleMenu implements Menu {
 
     @Override
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
-        throw new UnsupportedOperationException("метод еще не реализован ");
+        boolean rsl = false;
+        MenuItem menuItem = new SimpleMenuItem(childName, actionDelegate);
+        if (parentName == null) {
+            rootElements.add(menuItem);
+            rsl = true;
+        }
+        Optional<ItemInfo> itemInfo = findItem(parentName);
+        if (parentName != null && itemInfo.isPresent()) {
+            MenuItem parentItem = itemInfo.get().menuItem;
+            parentItem.getChildren().add(menuItem);
+            rsl = true;
+        }
+        return rsl;
     }
 
     @Override
@@ -24,7 +34,15 @@ public class SimpleMenu implements Menu {
     }
 
     private Optional<ItemInfo> findItem(String name) {
-        throw new UnsupportedOperationException("метод еще не реализован ");
+        Optional<ItemInfo> rsl = Optional.empty();
+        DFSIterator dfs = new DFSIterator();
+        while (dfs.hasNext()) {
+            ItemInfo itemInfo = dfs.next();
+            if (name.equals(itemInfo.menuItem.getName())) {
+                rsl = Optional.of(itemInfo);
+            }
+        }
+        return rsl;
     }
 
     private static class SimpleMenuItem implements MenuItem {

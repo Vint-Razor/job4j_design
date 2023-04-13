@@ -12,6 +12,15 @@ class SimpleMenuTest {
 
     @Test
     void add() {
+        Menu menu = new SimpleMenu();
+        menu.add(Menu.ROOT, "Сходить в магазин", STAB_ACTION);
+        menu.add(Menu.ROOT, "Покормить собаку", STAB_ACTION);
+        menu.add("Сходить в магазин", "Купить продукты", STAB_ACTION);
+        menu.add("Купить продукты", "Купить хлеб", STAB_ACTION);
+        menu.add("Купить продукты", "Купить молоко", STAB_ACTION);
+        assertThat(new Menu.MenuItemInfo("Сходить в магазин",
+                List.of("Купить продукты"), STAB_ACTION, "1"))
+                .isEqualTo(menu.select("Сходить в магазин").get());
     }
 
     @Test

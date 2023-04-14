@@ -1,6 +1,7 @@
 package ru.job4j.odd.isp.menu;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 /**
@@ -11,7 +12,6 @@ import java.util.Scanner;
  * например, ActionDelete DEFAULT_ACTION = () -> System.out.println("Some action")
  * и указывать при добавлении элемента в меню);
  * - Вывести меню в консоль.
- *
  */
 public class TodoApp {
     private static final ActionDelegate DEFAULT_ACTION = () -> System.out.println("Some action");
@@ -21,18 +21,28 @@ public class TodoApp {
                 new ActionAdd(),
                 new ActionAddChild(),
                 new ActionPrint(),
+                new ActionExecute(),
                 new ActionExit()
         );
         Menu menu = new SimpleMenu();
         ConsoleMenuPrinter printer = new ConsoleMenuPrinter();
         Scanner scanner = new Scanner(System.in);
-        Boolean exit = false;
+        boolean exit = false;
         while (!exit) {
             showMenu(actionMenus);
             int number = Integer.parseInt(scanner.nextLine());
-            exit = actionMenus.get(number - 1).execute(menu, scanner, printer);
+            if (validator(number, actionMenus)) {
+                exit = actionMenus.get(number - 1).execute(menu, scanner, printer);
+            } else {
+                System.out.printf("Ведите число от 1 до %d\n", actionMenus.size());
+            }
+
         }
         System.out.println("Выход");
+    }
+
+    private static boolean validator(int number, List<ActionMenu> actionMenus) {
+        return number >= 1 && number <= actionMenus.size();
     }
 
     private static void showMenu(List<ActionMenu> list) {
@@ -91,6 +101,27 @@ public class TodoApp {
         @Override
         public String getName() {
             return "Вывести меню в консоль";
+        }
+    }
+
+    private static class ActionExecute implements ActionMenu {
+
+        @Override
+        public boolean execute(Menu menu, Scanner scanner, MenuPrinter printer) {
+            System.out.println("Укажите имя строки, которую вы хотите выполнить");
+            String name = scanner.nextLine();
+            Optional<Menu.MenuItemInfo> select = menu.select(name);
+            if (select.isPresent()) {
+                select.get().getActionDelegate().delegate();
+            } else {
+                System.out.printf("строка с именем %s не найдена", name);
+            }
+            return false;
+        }
+
+        @Override
+        public String getName() {
+            return "Вызвать действие";
         }
     }
 

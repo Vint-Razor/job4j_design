@@ -31,6 +31,7 @@ public class TodoApp {
         while (!exit) {
             showMenu(actionMenus);
             int number = Integer.parseInt(scanner.nextLine());
+            //TODO написать обработчик NumberFormatException
             if (validator(number, actionMenus)) {
                 exit = actionMenus.get(number - 1).execute(menu, scanner, printer);
             } else {

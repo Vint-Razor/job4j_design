@@ -33,7 +33,13 @@ public class SimpleMenu implements Menu {
 
     @Override
     public Iterator<MenuItemInfo> iterator() {
-        throw new UnsupportedOperationException("метод еще не реализован ");
+        List<MenuItemInfo> list = new ArrayList<>();
+        DFSIterator dfs = new DFSIterator();
+        while (dfs.hasNext()) {
+            ItemInfo itemInfo = dfs.next();
+            list.add(new MenuItemInfo(itemInfo.menuItem, itemInfo.number));
+        }
+        return list.iterator();
     }
 
     private Optional<ItemInfo> findItem(String name) {

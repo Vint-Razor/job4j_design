@@ -4,6 +4,7 @@ import org.junit.Ignore;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -30,12 +31,17 @@ class SimpleMenuTest {
                 .isEqualTo(menu.select("Сходить в магазин").get());
     }
 
-    @Disabled
     @Test
     void iterator() {
+        Menu menu = new SimpleMenu();
+        menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION);
+        menu.add(Menu.ROOT, "Покормить собаку", STUB_ACTION);
+        StringBuilder sb = new StringBuilder();
+        menu.forEach(i -> sb.append(i.getName()).append(" "));
+        String actual = "Сходить в магазин Покормить собаку ";
+        assertThat(sb.toString()).isEqualTo(actual);
     }
 
-    @Disabled
     @Test
     public void whenAddThenReturnSame() {
         Menu menu = new SimpleMenu();

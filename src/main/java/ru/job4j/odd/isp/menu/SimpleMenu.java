@@ -43,6 +43,7 @@ public class SimpleMenu implements Menu {
             ItemInfo itemInfo = dfs.next();
             if (name.equals(itemInfo.menuItem.getName())) {
                 rsl = Optional.of(itemInfo);
+                break;
             }
         }
         return rsl;

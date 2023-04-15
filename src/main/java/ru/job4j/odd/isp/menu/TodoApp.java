@@ -8,13 +8,13 @@ import java.util.Scanner;
  * Этот класс будет представлять собой консольное приложение, которое позволяет:
  * - Добавить элемент в корень меню;
  * - Добавить элемент к родительскому элементу;
- * - Вызвать действие, привязанное к пункту меню (действие можно сделать константой,
- * например, ActionDelete DEFAULT_ACTION = () -> System.out.println("Some action")
- * и указывать при добавлении элемента в меню);
+ * - Вызвать действие;
  * - Вывести меню в консоль.
  */
 public class TodoApp {
     private static final ActionDelegate DEFAULT_ACTION = () -> System.out.println("Some action");
+    /* Константа означает регулярное выражение только натуральные числа */
+    private static final String NUMBER_REGEX = "\\d+";
 
     public static void main(String[] args) {
         List<ActionMenu> actionMenus = List.of(
@@ -30,20 +30,19 @@ public class TodoApp {
         boolean exit = false;
         while (!exit) {
             showMenu(actionMenus);
-            int number = Integer.parseInt(scanner.nextLine());
-            //TODO написать обработчик NumberFormatException
-            if (validator(number, actionMenus)) {
+            String strLine = scanner.nextLine();
+            if (!strLine.matches(NUMBER_REGEX)) {
+                System.out.println("Не корректный ввод. Введите число сответствующее пункту меню");
+                continue;
+            }
+            int number = Integer.parseInt(strLine);
+            if (number >= 1 && number <= actionMenus.size()) {
                 exit = actionMenus.get(number - 1).execute(menu, scanner, printer);
             } else {
                 System.out.printf("Ведите число от 1 до %d\n", actionMenus.size());
             }
-
         }
         System.out.println("Выход");
-    }
-
-    private static boolean validator(int number, List<ActionMenu> actionMenus) {
-        return number >= 1 && number <= actionMenus.size();
     }
 
     private static void showMenu(List<ActionMenu> list) {

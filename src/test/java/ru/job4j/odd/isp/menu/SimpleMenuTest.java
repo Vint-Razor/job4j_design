@@ -1,13 +1,10 @@
 package ru.job4j.odd.isp.menu;
 
-import org.junit.Ignore;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.util.Iterator;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class SimpleMenuTest {
 
@@ -20,7 +17,6 @@ class SimpleMenuTest {
         assertThat(new Menu.MenuItemInfo("Сходить в магазин",
                 List.of(), STUB_ACTION, "1."))
                 .isEqualTo(menu.select("Сходить в магазин").get());
-        //TODO попытаться написать без метода select
     }
 
     @Test

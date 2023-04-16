@@ -26,6 +26,7 @@ class SimpleMenuTest {
         assertThat(new Menu.MenuItemInfo("Сходить в магазин",
                 List.of(), STUB_ACTION, "1."))
                 .isEqualTo(menu.select("Сходить в магазин").get());
+        //TODO длжен выводить STAB_ACTION
     }
 
     @Test

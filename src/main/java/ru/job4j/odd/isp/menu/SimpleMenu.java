@@ -27,8 +27,16 @@ public class SimpleMenu implements Menu {
 
     @Override
     public Optional<MenuItemInfo> select(String itemName) {
-        ItemInfo itemInfo = findItem(itemName).get();
-        return Optional.of(new MenuItemInfo(itemInfo.menuItem, itemInfo.number));
+        Optional<MenuItemInfo> menuItemInfo;
+        Optional<ItemInfo> itemInfoOptional = findItem(itemName);
+        if (itemInfoOptional.isPresent()) {
+            ItemInfo itemInfo = itemInfoOptional.get();
+            itemInfo.menuItem.getActionDelegate().delegate();
+            menuItemInfo = Optional.of(new MenuItemInfo(itemInfo.menuItem, itemInfo.number));
+        } else {
+            menuItemInfo = Optional.empty();
+        }
+        return menuItemInfo;
     }
 
     @Override

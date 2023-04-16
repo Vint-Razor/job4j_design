@@ -1,32 +1,42 @@
 package ru.job4j.odd.isp.menu;
 
+import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SimpleMenuTest {
-
     private static final ActionDelegate STUB_ACTION = System.out::println;
+    private ByteArrayOutputStream output;
+    private PrintStream old;
 
-    @Test
-    void checkAdd() {
-        Menu menu = new SimpleMenu();
-        menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION);
-        assertThat(new Menu.MenuItemInfo("Сходить в магазин",
-                List.of(), STUB_ACTION, "1."))
-                .isEqualTo(menu.select("Сходить в магазин").get());
+    @BeforeEach
+    void before() {
+        old = System.out;
+        output = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(output));
+    }
+
+    @AfterEach
+    void after() {
+        System.setOut(old);
     }
 
     @Test
     void checkSelect() {
         Menu menu = new SimpleMenu();
-        menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION);
-        assertThat(new Menu.MenuItemInfo("Сходить в магазин",
-                List.of(), STUB_ACTION, "1."))
-                .isEqualTo(menu.select("Сходить в магазин").get());
-        //TODO длжен выводить STAB_ACTION
+        ActionDelegate delegate = () -> System.out.print("Делигат вызван");
+        menu.add(Menu.ROOT, "Сходить в магазин", delegate);
+        menu.select("Сходить в магазин");
+        String actual = "Делигат вызван";
+        String expected = output.toString();
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test

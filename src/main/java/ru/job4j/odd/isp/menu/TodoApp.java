@@ -111,9 +111,7 @@ public class TodoApp {
             System.out.println("Укажите имя строки, которую вы хотите выполнить");
             String name = scanner.nextLine();
             Optional<Menu.MenuItemInfo> select = menu.select(name);
-            if (select.isPresent()) {
-                select.get().getActionDelegate().delegate();
-            } else {
+            if (select.isEmpty()) {
                 System.out.printf("строка с именем %s не найдена", name);
             }
             return false;

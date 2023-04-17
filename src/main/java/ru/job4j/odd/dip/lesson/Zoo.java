@@ -23,6 +23,9 @@ public class Zoo {
                 break;
             }
         }
+        if (rsl.isEmpty()) {
+            System.out.printf("Животное с именем %s не найдено", animal);
+        }
         return rsl;
     }
 

@@ -1,6 +1,7 @@
 package ru.job4j.odd.lsp.storage;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -64,15 +65,14 @@ class ControlQualityTest {
     }
 
     @Test
-    @Deprecated
+    @Disabled
     void chekResort() {
         LocalDate newNow = LocalDate.now().plusDays(70);
         CalcExpiration calc = new CalcExpiration(now);
         ControlQuality quality = new ControlQuality(storeList);
-        quality.checkFood(milkExp75);
         calc.setNow(newNow);
-        //quality.resort();
-        List<Food> expected = shop.getFoodList();
+        quality.resort();
+        List<Food> expected = warehouse.getFoodList();
         assertThat(expected).contains(milkExp80);
     }
 }

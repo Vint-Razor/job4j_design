@@ -23,4 +23,8 @@ public class ControlQuality {
             }
         }
     }
+
+    public void resort() {
+
+    }
 }

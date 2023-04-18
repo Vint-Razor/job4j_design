@@ -33,7 +33,7 @@ public class Zoo {
             }
         }
         if (rsl.isEmpty()) {
-            System.out.printf("Животное с именем %s не найдено", animal);
+            System.out.printf("Животное с иенем %s не найдено", animal);
         }
         return rsl;
     }

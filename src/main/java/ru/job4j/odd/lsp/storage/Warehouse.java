@@ -5,9 +5,14 @@ import java.util.function.Predicate;
 
 public class Warehouse extends AbstractStore {
 
+    public Warehouse(CalcExpiration calc) {
+        super(calc);
+    }
+
     @Override
     public Predicate<Food> getCondition() {
-        return a -> a.calcExpirationPer() < 25 && a.calcExpirationPer() > 0;
+        return a -> calc.calcPer(a.getCreateDate(), a.getExpiryDate()) < 25
+                && calc.calcPer(a.getCreateDate(), a.getExpiryDate()) > 0;
     }
 
     @Override

@@ -5,9 +5,13 @@ import java.util.function.Predicate;
 
 public class Trash extends AbstractStore {
 
+    public Trash(CalcExpiration calc) {
+        super(calc);
+    }
+
     @Override
     public Predicate<Food> getCondition() {
-        return a -> a.calcExpirationPer() == 0;
+        return a -> calc.calcPer(a.getCreateDate(), a.getExpiryDate()) == 0;
     }
 
     @Override

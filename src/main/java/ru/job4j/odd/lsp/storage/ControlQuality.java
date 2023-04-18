@@ -5,7 +5,7 @@ import java.util.List;
 public class ControlQuality {
     private final List<Store> storeList;
 
-    public ControlQuality(List<Store> storeList, CalcExpiration calc) {
+    public ControlQuality(List<Store> storeList) {
         this.storeList = storeList;
     }
 

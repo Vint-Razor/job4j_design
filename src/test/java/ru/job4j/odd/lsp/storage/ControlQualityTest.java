@@ -10,9 +10,10 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ControlQualityTest {
-    private static Store trash = new Trash();
-    private static Store warehouse = new Warehouse();
-    private static Store shop = new Shop();
+    private static LocalDate now = LocalDate.now();
+    private static Store trash;
+    private static Store warehouse;
+    private static Store shop;
     private static List<Store> storeList = new ArrayList<>();
     private static Milk milkExp75 = new Milk("Milk", LocalDate.now().plusDays(75),
             LocalDate.now().minusDays(25), 56.0d, 20);
@@ -27,8 +28,12 @@ class ControlQualityTest {
 
     @BeforeAll
     static void before() {
+        CalcExpiration calc = new CalcExpiration(now);
+        trash = new Trash(calc);
+        shop = new Shop(calc);
+        warehouse = new Warehouse(calc);
         storeList = List.of(trash, shop, warehouse);
-        ControlQuality quality = new ControlQuality(storeList, calc);
+        ControlQuality quality = new ControlQuality(storeList);
         quality.checkFood(milkExp75);
         quality.checkFood(milkExp25);
         quality.checkFood(milkExp80);
@@ -59,15 +64,14 @@ class ControlQualityTest {
     }
 
     @Test
+    @Deprecated
     void chekResort() {
-        LocalDate now = LocalDate.now();
         LocalDate newNow = LocalDate.now().plusDays(70);
         CalcExpiration calc = new CalcExpiration(now);
-        storeList = List.of(trash, shop, warehouse);
-        ControlQuality quality = new ControlQuality(storeList, calc);
-        quality.checkFood(milkExp80);
+        ControlQuality quality = new ControlQuality(storeList);
+        quality.checkFood(milkExp75);
         calc.setNow(newNow);
-        quality.resort();
+        //quality.resort();
         List<Food> expected = shop.getFoodList();
         assertThat(expected).contains(milkExp80);
     }

@@ -6,6 +6,8 @@ public class ZooApp {
         Zoo zoo = new Zoo();
         Animal wolf = new Wolf("Wolfy", 2);
         zoo.addAnimal(wolf);
-        System.out.println(zoo.getAnimalInfo(wolf).get());
+        System.out.println(zoo.getAnimalInfo("Wolfy").get());
+        Employee jack = new Zookeeper(1, "Jack", 100);
+        Employee.addEmployee(jack);
     }
 }

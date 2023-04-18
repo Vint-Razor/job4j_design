@@ -15,10 +15,10 @@ public class Zoo {
         return animalList.remove(animal);
     }
 
-    private Optional<Animal> findAnimal(Animal animal) {
+    private Optional<Animal> findAnimal(String animal) {
         Optional<Animal> rsl = Optional.empty();
         for (Animal anim : animalList) {
-            if (anim.equals(animal)) {
+            if (anim.getName().equals(animal)) {
                 rsl = Optional.of(anim);
                 break;
             }
@@ -29,9 +29,10 @@ public class Zoo {
         return rsl;
     }
 
-    public Optional<AnimalInfo> getAnimalInfo(Animal animal) {
+    public Optional<AnimalInfo> getAnimalInfo(String animal) {
         final Optional<Animal> optional = findAnimal(animal);
-        return Optional.of(new AnimalInfo(optional.get().getName(), optional.get().getAge()));
+        return optional.map(value -> new AnimalInfo(value.getName(), value.getAge()));
+
     }
 
     static class AnimalInfo {

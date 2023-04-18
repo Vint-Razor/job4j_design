@@ -11,7 +11,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ControlQualityTest {
-    private static LocalDate now = LocalDate.now();
+    private static CalcExpiration calc = new CalcExpiration(LocalDate.now());
     private static Store trash;
     private static Store warehouse;
     private static Store shop;
@@ -29,7 +29,6 @@ class ControlQualityTest {
 
     @BeforeAll
     static void before() {
-        CalcExpiration calc = new CalcExpiration(now);
         trash = new Trash(calc);
         shop = new Shop(calc);
         warehouse = new Warehouse(calc);
@@ -65,10 +64,8 @@ class ControlQualityTest {
     }
 
     @Test
-    @Disabled
-    void chekResort() {
+    void checkResort() {
         LocalDate newNow = LocalDate.now().plusDays(70);
-        CalcExpiration calc = new CalcExpiration(now);
         ControlQuality quality = new ControlQuality(storeList);
         calc.setNow(newNow);
         quality.resort();

@@ -3,6 +3,7 @@ package ru.job4j.odd.lsp.storage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
 
 public class ControlQuality {
     private final List<Store> storeList;
@@ -15,6 +16,7 @@ public class ControlQuality {
         for (Store store : storeList) {
             if (store.getCondition().test(food)) {
                 store.addFood(food);
+                break;
             }
 
             if (store.getDiscountCondition().isPresent()
@@ -30,10 +32,11 @@ public class ControlQuality {
         List<Food> tempFodList = new ArrayList<>();
         for (Store store : storeList) {
             List<Food> foodList = store.getFoodList();
-            // 1. сохранить старую еду
-            Collections.copy(tempFodList, store.getFoodList());
-            // 2. удалить старую еду из storeList;
-            // 3. checkFood сохраненную еду
+            tempFodList.addAll(foodList);
+            foodList.clear();
+        }
+        for (Food food : tempFodList) {
+            checkFood(food);
         }
     }
 }

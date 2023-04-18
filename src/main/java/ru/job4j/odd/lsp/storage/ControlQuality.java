@@ -1,5 +1,7 @@
 package ru.job4j.odd.lsp.storage;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ControlQuality {
@@ -25,6 +27,13 @@ public class ControlQuality {
     }
 
     public void resort() {
-
+        List<Food> tempFodList = new ArrayList<>();
+        for (Store store : storeList) {
+            List<Food> foodList = store.getFoodList();
+            // 1. сохранить старую еду
+            Collections.copy(tempFodList, store.getFoodList());
+            // 2. удалить старую еду из storeList;
+            // 3. checkFood сохраненную еду
+        }
     }
 }

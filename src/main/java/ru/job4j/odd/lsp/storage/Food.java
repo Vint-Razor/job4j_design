@@ -2,9 +2,7 @@ package ru.job4j.odd.lsp.storage;
 
 import java.time.LocalDate;
 
-import static java.time.temporal.ChronoUnit.DAYS;
-
-public abstract class Food {
+public abstract class Food implements Cloneable {
     private final String name;
     private final LocalDate expiryDate;
     private final LocalDate createDate;
@@ -45,5 +43,14 @@ public abstract class Food {
 
     public void setDiscount(int discount) {
         this.discount = discount;
+    }
+
+    @Override
+    public Food clone() {
+        try {
+            return (Food) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

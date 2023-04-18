@@ -7,7 +7,7 @@ public abstract class Employee {
     private final int id;
     private final String name;
     private int salary;
-    private static List<Employee> employees = new ArrayList<>();
+
 
     public Employee(int id, String name, int salary) {
         this.id = id;
@@ -31,11 +31,5 @@ public abstract class Employee {
         this.salary = salary;
     }
 
-    public static boolean addEmployee(Employee employee) {
-        return employees.add(employee);
-    }
 
-    public static boolean deleteEmp(Employee employee) {
-        return employees.remove(employee);
-    }
 }

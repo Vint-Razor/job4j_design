@@ -5,7 +5,16 @@ import java.util.List;
 import java.util.Optional;
 
 public class Zoo {
+    private EmployeeStore employeeStore;
     private List<Animal> animalList = new LinkedList<>();
+
+    public Zoo(EmployeeStore employeeStore) {
+        this.employeeStore = employeeStore;
+    }
+
+    public EmployeeStore getEmployeeStore() {
+        return employeeStore;
+    }
 
     public boolean addAnimal(Animal animal) {
         return animalList.add(animal);
@@ -32,7 +41,6 @@ public class Zoo {
     public Optional<AnimalInfo> getAnimalInfo(String animal) {
         final Optional<Animal> optional = findAnimal(animal);
         return optional.map(value -> new AnimalInfo(value.getName(), value.getAge()));
-
     }
 
     static class AnimalInfo {

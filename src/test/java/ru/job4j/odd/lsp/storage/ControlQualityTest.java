@@ -28,7 +28,7 @@ class ControlQualityTest {
     @BeforeAll
     static void before() {
         storeList = List.of(trash, shop, warehouse);
-        ControlQuality quality = new ControlQuality(storeList);
+        ControlQuality quality = new ControlQuality(storeList, calc);
         quality.checkFood(milkExp75);
         quality.checkFood(milkExp25);
         quality.checkFood(milkExp80);
@@ -56,5 +56,19 @@ class ControlQualityTest {
     @Test
     void wereExpirationDateOutThereTrash() {
         assertThat(trash.getFoodList()).containsExactlyInAnyOrder(juiceExpired);
+    }
+
+    @Test
+    void chekResort() {
+        LocalDate now = LocalDate.now();
+        LocalDate newNow = LocalDate.now().plusDays(70);
+        CalcExpiration calc = new CalcExpiration(now);
+        storeList = List.of(trash, shop, warehouse);
+        ControlQuality quality = new ControlQuality(storeList, calc);
+        quality.checkFood(milkExp80);
+        calc.setNow(newNow);
+        quality.resort();
+        List<Food> expected = shop.getFoodList();
+        assertThat(expected).contains(milkExp80);
     }
 }

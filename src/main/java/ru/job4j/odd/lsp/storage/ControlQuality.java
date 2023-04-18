@@ -5,7 +5,7 @@ import java.util.List;
 public class ControlQuality {
     private final List<Store> storeList;
 
-    public ControlQuality(List<Store> storeList) {
+    public ControlQuality(List<Store> storeList, CalcExpiration calc) {
         this.storeList = storeList;
     }
 
@@ -15,7 +15,8 @@ public class ControlQuality {
                 store.addFood(food);
             }
 
-            if (store.getDiscountCondition().isPresent() && store.getDiscountCondition().get().test(food)) {
+            if (store.getDiscountCondition().isPresent()
+                    && store.getDiscountCondition().get().test(food)) {
                 double price = food.getPrice();
                 food.setPrice(price - (price * food.getDiscount() / 100));
                 store.addFood(food);

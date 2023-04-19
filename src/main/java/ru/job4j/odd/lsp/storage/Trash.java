@@ -11,7 +11,7 @@ public class Trash extends AbstractStore {
 
     @Override
     public Predicate<Food> getCondition() {
-        return a -> calc.calcPer(a.getCreateDate(), a.getExpiryDate()) == 0;
+        return a -> calc.calcPer(a.getCreateDate(), a.getExpiryDate()) == 100;
     }
 
     @Override

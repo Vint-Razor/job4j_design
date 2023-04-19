@@ -18,12 +18,12 @@ public class ControlQuality {
                 store.addFood(food);
                 break;
             }
-
             if (store.getDiscountCondition().isPresent()
                     && store.getDiscountCondition().get().test(food)) {
                 double price = food.getPrice();
                 food.setPrice(price - (price * food.getDiscount() / 100));
                 store.addFood(food);
+                break;
             }
         }
     }

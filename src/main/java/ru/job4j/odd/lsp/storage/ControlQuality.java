@@ -1,9 +1,7 @@
 package ru.job4j.odd.lsp.storage;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
 
 public class ControlQuality {
     private final List<Store> storeList;
